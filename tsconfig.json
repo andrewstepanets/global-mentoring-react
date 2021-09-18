@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["dom", "es6"],
+    "outDir": "./build",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "jsx": "react",
+    "noImplicitAny": false,
+    "baseUrl": "./src",
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
+  }
+}
