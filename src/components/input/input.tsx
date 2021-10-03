@@ -8,9 +8,11 @@ export interface InputProps {
   type: string;
   value: string;
   onChange: (event: FormEvent<HTMLInputElement>) => void;
+  onClick?: () => void;
   search?: boolean;
   topic?: boolean;
   release?: boolean;
+  rating?: boolean;
   movie?: boolean;
   genre?: boolean;
   overview?: boolean;

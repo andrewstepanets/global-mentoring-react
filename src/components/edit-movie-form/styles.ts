@@ -2,20 +2,20 @@ import { AiOutlineClose } from 'react-icons/ai';
 import styled from 'styled-components';
 import { colors, colorsRgba, rgbaMap } from '../../styles/constants';
 
-export const AddMovieFormWrapper = styled.div`
+export const EditMovieFormWrapper = styled.div`
   position: fixed;
   left: 0;
   top: 0;
   display: none;
   /* when this form is showing it states flex instead none */
-  /* display: flex; */
+  display: flex;
   z-index: 999;
   width: 100%;
   height: 100%;
   background: ${rgbaMap(colorsRgba.grey_dark, 0.7)};
 `;
 
-export const AddMovieFormContainer = styled.div`
+export const EditMovieFormContainer = styled.div`
   position: relative;
   max-width: 780px;
   width: 95%;
@@ -26,7 +26,7 @@ export const AddMovieFormContainer = styled.div`
   border-radius: 5px;
 `;
 
-export const AddMovieFormInner = styled.form`
+export const EditMovieFormInner = styled.form`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
@@ -35,7 +35,7 @@ export const AddMovieFormInner = styled.form`
   }
 `;
 
-export const AddMovieFormTitle = styled.h2`
+export const EditMovieFormTitle = styled.h2`
   margin: 20px 0;
   font-size: 30px;
   font-weight: 400;
@@ -43,7 +43,7 @@ export const AddMovieFormTitle = styled.h2`
   text-transform: uppercase;
 `;
 
-export const AddMovieButtonContainer = styled.div`
+export const EditMovieButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;

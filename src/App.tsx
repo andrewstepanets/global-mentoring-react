@@ -1,5 +1,7 @@
 import { AddMovieForm } from 'components/add-movie-form';
 import { Catalog } from 'components/catalog/catalog';
+import { DeleteMovieForm } from 'components/delete-movie-form';
+import { EditMovieForm } from 'components/edit-movie-form';
 import Footer from 'components/footer/footer';
 import { Header } from 'components/header';
 import { ErrorBoundary } from 'error-boundary';
@@ -13,6 +15,8 @@ const App = () => {
       <GlobalStyles />
       <MainPageGrid>
         <AddMovieForm />
+        <EditMovieForm />
+        <DeleteMovieForm />
         <Header />
         <Catalog />
         <Footer />
