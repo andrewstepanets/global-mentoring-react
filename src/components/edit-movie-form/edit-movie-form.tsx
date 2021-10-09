@@ -103,7 +103,7 @@ export const EditMovieForm: FC = () => {
           />
         </EditMovieFormInner>
         <EditMovieButtonContainer>
-          <Button reset type="reset" onClick={null} text="Reset" />
+          <Button reset type="reset" text="Reset" />
           <Button submit type="submit" onClick={handleSubmit} text="Submit" />
         </EditMovieButtonContainer>
       </EditMovieFormContainer>

@@ -31,7 +31,7 @@ const selectOptions = [
 export const AddMovieForm: FC = () => {
   const [values, setValues] = useState(initialValues);
 
-  const handleOnChange = ({ target }): void => {
+  const handleOnChange = ({ target }) => {
     const { name, value } = target;
 
     setValues({
@@ -104,7 +104,7 @@ export const AddMovieForm: FC = () => {
           />
         </AddMovieFormInner>
         <AddMovieButtonContainer>
-          <Button reset type="reset" onClick={null} text="Reset" />
+          <Button reset type="reset" text="Reset" />
           <Button submit type="submit" onClick={handleSubmit} text="Submit" />
         </AddMovieButtonContainer>
       </AddMovieFormContainer>
