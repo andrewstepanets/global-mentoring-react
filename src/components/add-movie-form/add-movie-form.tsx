@@ -2,7 +2,7 @@ import { Button } from 'components/button';
 import { Input } from 'components/input';
 import { ReleaseDatePicker } from 'components/release-date-picker';
 import { Select } from 'components/select';
-import React, { FC, FormEvent, useState } from 'react';
+import React, { FC, FormEvent, useCallback, useState } from 'react';
 import {
   AddMovieButtonContainer,
   AddMovieFormContainer,
@@ -11,6 +11,10 @@ import {
   AddMovieFormWrapper,
   CloseButton,
 } from './styles';
+
+interface AddMovieFormProps {
+  hideAdd: () => void;
+}
 
 const initialValues = {
   genre: '',
@@ -21,38 +25,28 @@ const initialValues = {
   title: '',
 };
 
-const selectOptions = [
-  { id: 1, name: 'Crime' },
-  { id: 2, name: 'Documentary' },
-  { id: 3, name: 'Horror' },
-  { id: 4, name: 'Comedy' },
-];
-
-export const AddMovieForm: FC = () => {
+export const AddMovieForm: FC<AddMovieFormProps> = ({ hideAdd }) => {
   const [values, setValues] = useState(initialValues);
 
-  const handleOnChange = ({ target }) => {
-    const { name, value } = target;
+  const handleOnChange = useCallback(({ target }) => {
+    const value = target.type === 'checkbox' ? target.checked : target.value;
 
     setValues({
       ...values,
-      [name]: value,
+      [target.name]: value,
     });
-  };
+  }, []);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(JSON.stringify(values, null, 2));
-  };
 
-  const onSelectChange = (event) => {
-    console.log('event: ', event);
-  };
+    console.log(JSON.stringify(values, null, 2));
+  }, []);
 
   return (
     <AddMovieFormWrapper>
       <AddMovieFormContainer>
-        <CloseButton />
+        <CloseButton onClick={() => hideAdd()} />
         <AddMovieFormTitle>Add Movie</AddMovieFormTitle>
         <AddMovieFormInner onSubmit={handleSubmit}>
           <Input
@@ -83,7 +77,7 @@ export const AddMovieForm: FC = () => {
             onChange={handleOnChange}
             value={values.rating}
           />
-          <Select data={selectOptions} onSelectChange={onSelectChange} />
+          <Select onChange={handleOnChange} value={values.genre} name="genre" />
           <Input
             runtime
             label="Runtime"

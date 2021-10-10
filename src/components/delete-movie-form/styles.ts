@@ -6,13 +6,11 @@ export const DeleteMovieWrapper = styled.div`
   position: fixed;
   left: 0;
   top: 0;
-  display: none;
-  /* when this form is showing it states flex instead none */
-  /* display: flex; */
+  display: flex;
   z-index: 999;
   width: 100%;
   height: 100%;
-  background: ${rgbaMap(colorsRgba.grey_dark, 0.7)};
+  background: ${rgbaMap(colorsRgba.rgba_grey_dark, 0.7)};
 `;
 
 export const DeleteMovieContainer = styled.div`

@@ -29,7 +29,7 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'build'),
     compress: true,
-    port: 4000,
+    port: 4001,
     open: true,
     hot: true,
   },

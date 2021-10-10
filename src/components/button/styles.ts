@@ -5,14 +5,9 @@ import {
   mediaQueries,
   rgbaMap,
 } from '../../styles/constants';
+import { StyledButtonProps } from './types';
 
-interface ButtonProps {
-  button?: boolean;
-  submit?: boolean;
-  reset?: boolean;
-}
-
-export const Button = styled.button<ButtonProps>`
+export const Button = styled.button<StyledButtonProps>`
   ${({ button }) =>
     button &&
     css`
@@ -61,6 +56,55 @@ export const Button = styled.button<ButtonProps>`
 
       &:hover {
         color: ${colors.grey};
+      }
+    `};
+
+  ${({ load }) =>
+    load &&
+    css`
+      display: block;
+      margin: 0 auto;
+      padding: 15px 30px;
+      margin-bottom: 80px;
+
+      color: ${colors.white};
+      border-radius: 30px;
+      border: 1px solid ${colors.white};
+      background-color: transparent;
+
+      ${mediaQueries('sizeXXL')`
+        align-self: center;
+
+        margin-top: 20px;
+      `}
+
+      &:hover {
+        color: ${colors.grey};
+      }
+
+      &:active {
+        border-color: ${colors.grey};
+      }
+    `};
+
+  ${({ magnifier }) =>
+    magnifier &&
+    css`
+      display: block;
+      padding: 15px 30px;
+
+      font-size: 50px;
+      background-color: transparent;
+      color: ${colors.coral};
+
+      ${mediaQueries('sizeXXL')`
+        align-self: center;
+
+        margin-top: 20px;
+      `}
+
+      &:hover {
+        transform: scale(1.2);
       }
     `};
 `;

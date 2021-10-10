@@ -12,6 +12,10 @@ import {
   EditMovieFormWrapper,
 } from './styles';
 
+interface EditMovieFormProps {
+  hideEdit: () => void;
+}
+
 const initialValues = {
   genre: '',
   movie: '',
@@ -21,37 +25,28 @@ const initialValues = {
   title: '',
 };
 
-const selectOptions = [
-  { id: 1, name: 'Crime' },
-  { id: 2, name: 'Documentary' },
-  { id: 3, name: 'Horror' },
-  { id: 4, name: 'Comedy' },
-];
-
-export const EditMovieForm: FC = () => {
+export const EditMovieForm: FC<EditMovieFormProps> = ({ hideEdit }) => {
   const [values, setValues] = useState(initialValues);
 
-  const handleOnChange = ({ target }): void => {
-    const { name, value } = target;
+  const handleOnChange = ({ target }) => {
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+
     setValues({
       ...values,
-      [name]: value,
+      [target.name]: value,
     });
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(JSON.stringify(values, null, 2));
-  };
 
-  const onSelectChange = (event) => {
-    console.log('event: ', event);
+    console.log(JSON.stringify(values, null, 2));
   };
 
   return (
     <EditMovieFormWrapper>
       <EditMovieFormContainer>
-        <CloseButton />
+        <CloseButton onClick={() => hideEdit()} />
         <EditMovieFormTitle>Edit Movie</EditMovieFormTitle>
         <EditMovieFormInner onSubmit={handleSubmit}>
           <Input
@@ -82,7 +77,7 @@ export const EditMovieForm: FC = () => {
             onChange={handleOnChange}
             value={values.rating}
           />
-          <Select data={selectOptions} onSelectChange={onSelectChange} />
+          <Select onChange={handleOnChange} value={values.genre} name="genre" />
           <Input
             runtime
             label="Runtime"

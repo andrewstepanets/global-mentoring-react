@@ -9,4 +9,14 @@ export interface ButtonProps {
   button?: boolean;
   submit?: boolean;
   reset?: boolean;
+  magnifier?: boolean;
+  load?: boolean;
+}
+
+export interface StyledButtonProps {
+  button?: boolean;
+  submit?: boolean;
+  reset?: boolean;
+  load?: boolean;
+  magnifier?: boolean;
 }

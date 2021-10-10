@@ -9,11 +9,15 @@ import {
   DeleteMovieWrapper,
 } from './styles';
 
-export const DeleteMovieForm: FC = () => {
+interface DeleteMovieFormProps {
+  hideDelete: () => void;
+}
+
+export const DeleteMovieForm: FC<DeleteMovieFormProps> = ({ hideDelete }) => {
   return (
     <DeleteMovieWrapper>
       <DeleteMovieContainer>
-        <CloseButton />
+        <CloseButton onClick={() => hideDelete()} />
         <DeleteMovieTitle>Delete Movie</DeleteMovieTitle>
         <DeleteMovieText>
           Are you sure you want to delete this movie?

@@ -13,11 +13,11 @@ export const FilterList = styled.ul`
   `}
 `;
 
-export const FilterListItem = styled.li`
-  display: inline-block;
-  text-decoration: none;
+export const FilterItem = styled.li`
   position: relative;
+  display: inline-block;
   margin: 25px 15px;
+  text-decoration: none;
   cursor: pointer;
   ::after {
     position: absolute;
@@ -26,7 +26,7 @@ export const FilterListItem = styled.li`
     width: 0;
     height: 2px;
     margin-top: 25px;
-    background: #f65261;
+    background: ${colors.coral};
     transition: width 0.3s;
   }
   :hover::after {

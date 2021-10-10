@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { colors, mediaQueries } from '../../../styles/constants';
 
-export const SortingList = styled.ul`
+export const SelectionList = styled.ul`
   display: flex;
   justify-content: space-between;
   font-size: 16px;
@@ -13,11 +13,11 @@ export const SortingList = styled.ul`
   `}
 `;
 
-export const SortingListItem = styled.li`
+export const SelectionItem = styled.li`
   position: relative;
   margin: 25px 15px;
-  cursor: pointer;
   text-decoration: none;
+  cursor: pointer;
   ::after {
     position: absolute;
     content: '';
@@ -25,7 +25,7 @@ export const SortingListItem = styled.li`
     width: 0;
     height: 2px;
     margin-top: 25px;
-    background: #f65261;
+    background: ${colors.coral};
     transition: width 0.3s;
   }
   :hover::after {
