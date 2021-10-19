@@ -12,6 +12,10 @@ export const SearchBlock: FC = () => {
     setValue(event.currentTarget.value);
   };
 
+  const handleSubmit = (event: FormEvent<HTMLInputElement>): void => {
+    console.log('Searching......');
+  };
+
   return (
     <SearchWrapper>
       <h2>Find your movie</h2>
@@ -29,7 +33,7 @@ export const SearchBlock: FC = () => {
           <SubmitButton
             submit
             type="submit"
-            onClick={() => console.log('Searching......')}
+            onClick={handleSubmit}
             text="Search"
           />
         </InputWrapper>

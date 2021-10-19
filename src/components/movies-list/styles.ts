@@ -13,7 +13,7 @@ export const FilterSortingWrapper = styled.div`
   `}
 `;
 
-export const NumberMovies = styled.h3`
+export const MoviesAmount = styled.h3`
   padding: 25px 70px;
   font-size: 18px;
   font-weight: 100;

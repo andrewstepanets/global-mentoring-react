@@ -2,17 +2,17 @@ import React, { FC } from 'react';
 import { Filter } from './filter';
 import { PostersOverview } from './posters-overview';
 import { Sorting } from './sorting';
-import { FilterSortingWrapper, NumberMovies } from './styles';
+import { FilterSortingWrapper, MoviesAmount } from './styles';
 
-export const Catalog: FC = () => (
+export const MoviesList: FC = () => (
   <>
     <FilterSortingWrapper>
       <Filter />
       <Sorting />
     </FilterSortingWrapper>
-    <NumberMovies>
+    <MoviesAmount>
       <span>10</span> movie found
-    </NumberMovies>
+    </MoviesAmount>
     <PostersOverview />
   </>
 );

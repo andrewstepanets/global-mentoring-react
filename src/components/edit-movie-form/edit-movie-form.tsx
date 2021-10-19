@@ -4,12 +4,12 @@ import { ReleaseDatePicker } from 'components/release-date-picker';
 import { Select } from 'components/select';
 import React, { FC, FormEvent, useState } from 'react';
 import {
-  AddMovieButtonContainer,
-  AddMovieFormContainer,
-  AddMovieFormInner,
-  AddMovieFormTitle,
-  AddMovieFormWrapper,
   CloseButton,
+  EditMovieButtonContainer,
+  EditMovieFormContainer,
+  EditMovieFormInner,
+  EditMovieFormTitle,
+  EditMovieFormWrapper,
 } from './styles';
 
 const initialValues = {
@@ -28,12 +28,11 @@ const selectOptions = [
   { id: 4, name: 'Comedy' },
 ];
 
-export const AddMovieForm: FC = () => {
+export const EditMovieForm: FC = () => {
   const [values, setValues] = useState(initialValues);
 
-  const handleOnChange = ({ target }) => {
+  const handleOnChange = ({ target }): void => {
     const { name, value } = target;
-
     setValues({
       ...values,
       [name]: value,
@@ -50,11 +49,11 @@ export const AddMovieForm: FC = () => {
   };
 
   return (
-    <AddMovieFormWrapper>
-      <AddMovieFormContainer>
+    <EditMovieFormWrapper>
+      <EditMovieFormContainer>
         <CloseButton />
-        <AddMovieFormTitle>Add Movie</AddMovieFormTitle>
-        <AddMovieFormInner onSubmit={handleSubmit}>
+        <EditMovieFormTitle>Edit Movie</EditMovieFormTitle>
+        <EditMovieFormInner onSubmit={handleSubmit}>
           <Input
             topic
             label="Title"
@@ -70,7 +69,7 @@ export const AddMovieForm: FC = () => {
             label="Movie url"
             name="movie"
             type="text"
-            placeholder="https://"
+            placeholder="https://www.moana.com"
             onChange={handleOnChange}
             value={values.movie}
           />
@@ -102,12 +101,12 @@ export const AddMovieForm: FC = () => {
             onChange={handleOnChange}
             value={values.overview}
           />
-        </AddMovieFormInner>
-        <AddMovieButtonContainer>
+        </EditMovieFormInner>
+        <EditMovieButtonContainer>
           <Button reset type="reset" text="Reset" />
           <Button submit type="submit" onClick={handleSubmit} text="Submit" />
-        </AddMovieButtonContainer>
-      </AddMovieFormContainer>
-    </AddMovieFormWrapper>
+        </EditMovieButtonContainer>
+      </EditMovieFormContainer>
+    </EditMovieFormWrapper>
   );
 };

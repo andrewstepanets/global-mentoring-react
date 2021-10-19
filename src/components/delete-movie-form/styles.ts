@@ -2,7 +2,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import styled from 'styled-components';
 import { colors, colorsRgba, rgbaMap } from '../../styles/constants';
 
-export const AddMovieFormWrapper = styled.div`
+export const DeleteMovieWrapper = styled.div`
   position: fixed;
   left: 0;
   top: 0;
@@ -15,7 +15,7 @@ export const AddMovieFormWrapper = styled.div`
   background: ${rgbaMap(colorsRgba.grey_dark, 0.7)};
 `;
 
-export const AddMovieFormContainer = styled.div`
+export const DeleteMovieContainer = styled.div`
   position: relative;
   max-width: 780px;
   width: 95%;
@@ -26,27 +26,23 @@ export const AddMovieFormContainer = styled.div`
   border-radius: 5px;
 `;
 
-export const AddMovieFormInner = styled.form`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 20px;
-  div:last-child {
-    grid-column: 1 / 3;
-  }
+export const DeleteMovieText = styled.p`
+  padding: 50px;
+  font-size: 20px;
 `;
 
-export const AddMovieFormTitle = styled.h2`
-  margin: 20px 0;
+export const DeleteMovieTitle = styled.h2`
+  padding: 85px 0 0 50px;
   font-size: 30px;
   font-weight: 400;
   color: ${colors.white};
   text-transform: uppercase;
 `;
 
-export const AddMovieButtonContainer = styled.div`
+export const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-top: 20px;
+  margin: 10px 40px 40px 40px;
 `;
 
 export const CloseButton = styled(AiOutlineClose)`
