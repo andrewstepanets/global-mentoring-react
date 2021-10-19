@@ -43,7 +43,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './index.html'),
       filename: 'index.html',
-      favicon: './src/assets/favicon.ico',
+      favicon: './src/assets/images/favicon.ico',
       minify: {
         collapseWhitespace: isProd,
       },
@@ -119,7 +119,7 @@ module.exports = {
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
-        test: /\.(gif|png|jpe?g|svg|ico)$/i,
+        test: /\.(png|jpe?g|svg|ico|gif)$/i,
         use: [
           {
             loader: 'file-loader',
