@@ -2,7 +2,7 @@ import { DropdownMenu } from 'components/dropdown-menu';
 import useMoreDetailsMovie from 'hooks/useMoreDetailsMovie';
 import React, { FC, useCallback, useEffect } from 'react';
 import shortid from 'shortid';
-import defaultImgMovie from '../../../../assets/images/fallback_movie.png';
+import { addDefaultSrc } from 'utils/utils';
 import { PosterItemProps } from '../types';
 import {
   PostersGenre,
@@ -44,11 +44,6 @@ export const PosterItem: FC<PosterItemProps> = ({
     setErrorMovieDetails(errorMovieDetails);
     setMovieDetails(movieDetails);
   }, [movieDetails, loadingMovieDetails, errorMovieDetails]);
-
-  const addDefaultSrc = useCallback(({ target }) => {
-    target.src = defaultImgMovie;
-    target.alt = 'image not found';
-  }, []);
 
   return (
     <PostersItem key={shortid.generate()}>
