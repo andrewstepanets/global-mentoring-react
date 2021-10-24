@@ -1,7 +1,7 @@
+import { ChangeEvent } from 'react';
+
 export interface SelectProps {
-  data: {
-    id: number;
-    name: string;
-  }[];
-  onSelectChange: (selectType: string) => void;
+  value: string;
+  name: string;
+  onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
 }

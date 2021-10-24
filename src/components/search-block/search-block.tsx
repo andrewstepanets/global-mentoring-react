@@ -1,7 +1,7 @@
-import { Button as SubmitButton } from 'components/button';
+import { Button } from 'components/button';
 import { Input } from 'components/input';
 import React, { FC, FormEvent, SyntheticEvent, useState } from 'react';
-import { InputWrapper, SearchWrapper } from './styles';
+import { InputSearchContainer, SearchTitle, SearchWrapper } from './styles';
 
 export const SearchBlock: FC = () => {
   const [value, setValue] = useState('');
@@ -18,9 +18,9 @@ export const SearchBlock: FC = () => {
 
   return (
     <SearchWrapper>
-      <h2>Find your movie</h2>
+      <SearchTitle>Find your movie</SearchTitle>
       <form onSubmit={(event: SyntheticEvent) => event.preventDefault()}>
-        <InputWrapper>
+        <InputSearchContainer>
           <Input
             search
             label={null}
@@ -30,13 +30,8 @@ export const SearchBlock: FC = () => {
             onChange={handleOnChange}
             value={value}
           />
-          <SubmitButton
-            submit
-            type="submit"
-            onClick={handleSubmit}
-            text="Search"
-          />
-        </InputWrapper>
+          <Button submit type="submit" onClick={null} text="Search" />
+        </InputSearchContainer>
       </form>
     </SearchWrapper>
   );

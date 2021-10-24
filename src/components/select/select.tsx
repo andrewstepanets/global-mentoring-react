@@ -1,26 +1,20 @@
-import React, { FC, useState } from 'react';
+import { SELECT_OPTIONS } from '@constants';
+import React, { FC } from 'react';
+import shortid from 'shortid';
 import { SelectMain, SelectTitle, SelectWrapper } from './styles';
 import { SelectProps } from './types';
 
-export const Select: FC<SelectProps> = ({ data, onSelectChange }) => {
-  const [dataSelect, setDataSelect] = useState(data);
-  const [selectedData, setSelectedData] = useState('');
-
-  const handleChange = ({ target }) => {
-    setSelectedData(target.value);
-    if (onSelectChange) onSelectChange(selectedData);
-  };
+export const Select: FC<SelectProps> = ({ onChange, name }) => {
+  const options = SELECT_OPTIONS.map((option) => (
+    <option key={shortid.generate()}>{option}</option>
+  ));
 
   return (
     <SelectWrapper>
       <SelectTitle>Genre</SelectTitle>
-      <SelectMain name="genre" onChange={handleChange}>
+      <SelectMain name={name} onChange={onChange}>
         <option hidden>Select Genre</option>
-        {dataSelect.map((data) => (
-          <option key={`${data.id}-${data.name}`} value={data.id}>
-            {data.name}
-          </option>
-        ))}
+        {options}
       </SelectMain>
     </SelectWrapper>
   );
