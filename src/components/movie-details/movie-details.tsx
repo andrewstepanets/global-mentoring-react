@@ -28,11 +28,6 @@ export const MovieDetails: FC<MovieDetailsProps> = ({
   loadingMovieDetails,
   errorMovieDetails,
 }) => {
-  const addDefaultSrc = useCallback(({ target }) => {
-    target.src = defaultImgMovie;
-    target.alt = 'Image not found';
-  }, []);
-
   const {
     poster_path,
     title,
@@ -42,6 +37,11 @@ export const MovieDetails: FC<MovieDetailsProps> = ({
     runtime,
     overview,
   } = movieDetails;
+
+  const addDefaultSrc = useCallback(({ target }) => {
+    target.src = defaultImgMovie;
+    target.alt = 'Image not found';
+  }, []);
 
   return (
     <MovieDetailsWrapper>

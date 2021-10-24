@@ -1,4 +1,3 @@
-// @media
 const breakpoints = {
   sizeS: 460,
   sizeM: 480,
@@ -12,7 +11,6 @@ export const mediaQueries = (key: keyof typeof breakpoints) => {
     `@media screen and (max-width: ${breakpoints[key]}px) { ${style} }`;
 };
 
-// colors
 export const colors = {
   white: '#ffffff',
   black: '#000000',
