@@ -1,7 +1,9 @@
+import { DropdownMenu } from 'components/dropdown-menu';
 import useMoreDetailsMovie from 'hooks/useMoreDetailsMovie';
 import React, { FC, useCallback, useEffect } from 'react';
 import shortid from 'shortid';
 import defaultImgMovie from '../../../../assets/images/fallback_movie.png';
+import { PosterItemProps } from '../types';
 import {
   PostersGenre,
   PostersImg,
@@ -12,44 +14,36 @@ import {
   PostersWrapTitle,
 } from './styles';
 
-interface PosterItemProps {
-  setMovieDetails: {
-    title: string;
-    tagline: string;
-    vote_average: number;
-    vote_count: number;
-    release_date: string;
-    poster_path: string;
-    overview: string;
-    budget: number;
-    revenue: number;
-    runtime: number;
-    genres: string[];
-    id: number;
-  };
-  poster: any;
-  genre: any;
-}
-
 export const PosterItem: FC<PosterItemProps> = ({
   setMovieDetails,
+  setLoadingMovieDetails,
+  setErrorMovieDetails,
   genre,
   poster,
+  hideEdit,
+  hideDelete,
 }: any) => {
   const {
     movieDetails,
     loadingMovieDetails,
     errorMovieDetails,
     fetchMovieDetails,
-  }: any = useMoreDetailsMovie();
+  } = useMoreDetailsMovie();
 
   const handleMoreDetails = useCallback((id) => {
     fetchMovieDetails(id);
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   }, []);
 
   useEffect(() => {
+    setLoadingMovieDetails(loadingMovieDetails);
+    setErrorMovieDetails(errorMovieDetails);
     setMovieDetails(movieDetails);
-  }, [movieDetails]);
+  }, [movieDetails, loadingMovieDetails, errorMovieDetails]);
 
   const addDefaultSrc = useCallback(({ target }) => {
     target.src = defaultImgMovie;
@@ -58,6 +52,11 @@ export const PosterItem: FC<PosterItemProps> = ({
 
   return (
     <PostersItem key={shortid.generate()}>
+      <DropdownMenu
+        hideEdit={hideEdit}
+        hideDelete={hideDelete}
+        posterId={poster.id}
+      />
       <PostersLink onClick={() => handleMoreDetails(poster.id)}>
         <PostersImg
           src={poster.poster_path}

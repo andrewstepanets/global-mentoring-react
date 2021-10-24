@@ -1,39 +1,36 @@
 import { Button } from 'components/button';
 import { Logo } from 'components/logo';
 import { MovieDetails } from 'components/movie-details';
+import { IMovieDetails } from 'components/movies-list/posters/types';
 import { SearchBlock } from 'components/search-block';
-import React, { FC, SyntheticEvent } from 'react';
+import React, { FC, SyntheticEvent, useCallback } from 'react';
 import { HeaderWrapper } from './styles';
 interface HeaderProps {
-  movieDetails: {
-    title: string;
-    tagline: string;
-    vote_average: number;
-    vote_count: number;
-    release_date: string;
-    poster_path: string;
-    overview: string;
-    budget: number;
-    revenue: number;
-    runtime: number;
-    genres: string[];
-    id: number;
-  };
+  loadingMovieDetails: boolean;
+  errorMovieDetails: boolean;
+  movieDetails: IMovieDetails;
   hide: () => void;
 }
 
-export const Header: FC<HeaderProps> = ({ hide, movieDetails }) => {
-  const handleOnClick = (event: SyntheticEvent): void => {
+export const Header: FC<HeaderProps> = ({
+  hide,
+  movieDetails,
+  loadingMovieDetails,
+  errorMovieDetails,
+}) => {
+  const handleOnClick = useCallback((event: SyntheticEvent): void => {
     event.preventDefault();
 
-    console.log('click');
-  };
+    console.log('click: ', event);
+  }, []);
+
+  const showByCondition = errorMovieDetails || movieDetails;
 
   return (
     <HeaderWrapper>
       <div className="header-top">
         <Logo />
-        {movieDetails && (
+        {showByCondition && (
           <Button
             magnifier
             type="button"
@@ -41,12 +38,18 @@ export const Header: FC<HeaderProps> = ({ hide, movieDetails }) => {
             text="&#x2315;"
           />
         )}
-        {!movieDetails && (
+        {!showByCondition && (
           <Button button type="button" onClick={hide} text="+ Add Movie" />
         )}
       </div>
-      {movieDetails && <MovieDetails movieDetails={movieDetails} />}
-      {!movieDetails && <SearchBlock />}
+      {showByCondition && (
+        <MovieDetails
+          movieDetails={movieDetails}
+          loadingMovieDetails={loadingMovieDetails}
+          errorMovieDetails={errorMovieDetails}
+        />
+      )}
+      {!showByCondition && <SearchBlock />}
     </HeaderWrapper>
   );
 };

@@ -1,32 +1,35 @@
 import React, { FC } from 'react';
 import { Filter } from './filter';
 import Posters from './posters/posters';
+import { PostersProps } from './posters/types';
 import { Selection } from './selection';
 import { FilterSelectionWrapper, MovieListWrapper } from './styles';
 
-export interface MoviesListProps {
-  setMovieDetails: {
-    title: string;
-    tagline: string;
-    vote_average: number;
-    vote_count: number;
-    release_date: string;
-    poster_path: string;
-    overview: string;
-    budget: number;
-    revenue: number;
-    runtime: number;
-    genres: string[];
-    id: number;
-  };
+export interface MoviesListProps extends PostersProps {
+  setLoadingMovieDetails: boolean;
+  setErrorMovieDetails: boolean;
+  hideEdit: () => void;
+  hideDelete: () => void;
 }
 
-export const MoviesList: FC<MoviesListProps> = ({ setMovieDetails }) => (
+export const MoviesList: FC<MoviesListProps> = ({
+  setMovieDetails,
+  setLoadingMovieDetails,
+  setErrorMovieDetails,
+  hideEdit,
+  hideDelete,
+}) => (
   <MovieListWrapper>
     <FilterSelectionWrapper>
       <Filter />
       <Selection />
     </FilterSelectionWrapper>
-    <Posters setMovieDetails={setMovieDetails} />
+    <Posters
+      setMovieDetails={setMovieDetails}
+      setLoadingMovieDetails={setLoadingMovieDetails}
+      setErrorMovieDetails={setErrorMovieDetails}
+      hideEdit={hideEdit}
+      hideDelete={hideDelete}
+    />
   </MovieListWrapper>
 );
