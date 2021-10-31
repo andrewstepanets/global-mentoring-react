@@ -1,4 +1,5 @@
 import { AddMovieForm } from 'components/add-movie-form';
+import { Congratulations } from 'components/congratulations';
 import { DeleteMovieForm } from 'components/delete-movie-form';
 import { EditMovieForm } from 'components/edit-movie-form';
 import Footer from 'components/footer/footer';
@@ -17,12 +18,22 @@ const App = () => {
   const { isShowing: isShowingAdd, toggle: toggleAdd } = useShowModal();
   const { isShowing: isShowingEdit, toggle: toggleEdit } = useShowModal();
   const { isShowing: isShowingDelete, toggle: toggleDelete } = useShowModal();
+  const { isShowing: isShowingCongratulations, toggle: toggleCongratulations } =
+    useShowModal();
 
   return (
     <ErrorBoundary>
       <GlobalStyles />
       <MainPageGrid>
-        {isShowingAdd && <AddMovieForm hideAdd={toggleAdd} />}
+        {isShowingAdd && (
+          <AddMovieForm
+            hideAdd={toggleAdd}
+            hideCongratulations={toggleCongratulations}
+          />
+        )}
+        {isShowingCongratulations && (
+          <Congratulations hideCongratulations={toggleCongratulations} />
+        )}
         {isShowingEdit && <EditMovieForm hideEdit={toggleEdit} />}
         {isShowingDelete && <DeleteMovieForm hideDelete={toggleDelete} />}
         <Header

@@ -1,11 +1,7 @@
 export const FETCH_MOVIES = 'FETCH_MOVIES';
-export const ERROR_MOVIES = 'ERROR_MOVIES';
-export const LOADING_MOVIES = 'LOADING_MOVIES';
-export const FETCH_LOAD_MORE_MOVIES = 'FETCH_LOAD_MORE_MOVIES';
 export const DELETE_MOVIE = 'DELETE_MOVIE';
 export const POSTER_ID = 'POSTER_ID';
-export const ADD_MOVIE_UI = 'ADD_MOVIE_UI';
+export const ADD_MOVIE = 'ADD_MOVIE';
 export const EDIT_MOVIE = 'EDIT_MOVIE';
-export const EDIT_MOVIE_UI = 'EDIT_MOVIE_UI';
 export const FILTER_MOVIES = 'FILTER_MOVIES';
-export const SORT_BY_MOVIES = 'SORT_BY_MOVIES';
+export const FILTER_ITEM = 'FILTER_ITEM';

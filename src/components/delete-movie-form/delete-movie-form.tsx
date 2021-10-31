@@ -1,7 +1,9 @@
-import { deleteMovieFetch } from 'api';
+import { API_DELETE } from '@constants';
 import { Button } from 'components/button';
+import { useApiRequest } from 'hooks/useApiRequest';
 import React, { FC, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { deleteMovie } from 'redux/actions';
 import {
   ButtonContainer,
   CloseButton,
@@ -16,11 +18,15 @@ interface DeleteMovieFormProps {
 }
 
 export const DeleteMovieForm: FC<DeleteMovieFormProps> = ({ hideDelete }) => {
-  const dispatch = useDispatch();
   const posterId = useSelector(({ movies: { posterId } }) => posterId);
+  const { fetchData: deleteMovieFetch } = useApiRequest(
+    'delete',
+    API_DELETE,
+    deleteMovie,
+  );
 
   const handleConfirm = useCallback(() => {
-    dispatch(deleteMovieFetch(posterId));
+    deleteMovieFetch(posterId);
     hideDelete();
   }, []);
 

@@ -1,25 +1,29 @@
-import { editMovie } from 'api';
+import { API_BASE } from '@constants';
 import { Button } from 'components/button';
 import { Input } from 'components/input';
 import { ReleaseDatePicker } from 'components/release-date-picker';
 import { Select } from 'components/select';
+import { useFormik } from 'formik';
+import { useApiRequest } from 'hooks/useApiRequest';
 import moment from 'moment';
-import React, { FC, FormEvent, useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { FC } from 'react';
+import { useSelector } from 'react-redux';
+import { editMovie } from 'redux/actions';
+import * as Yup from 'yup';
 import {
   CloseButton,
   EditMovieButtonContainer,
   EditMovieFormContainer,
+  EditMovieFormError,
   EditMovieFormInner,
   EditMovieFormTitle,
   EditMovieFormWrapper,
 } from './styles';
-
 interface EditMovieFormProps {
   hideEdit: () => void;
 }
 
-const initialValues = {
+const initialValue = {
   id: '',
   title: '',
   release_date: '',
@@ -27,60 +31,67 @@ const initialValues = {
   genres: [],
   overview: '',
   runtime: '',
-  rating: '',
 };
+
+const validationSchema = Yup.object({
+  id: Yup.string().required('Required'),
+  title: Yup.string().required('Required'),
+  poster_path: Yup.string()
+    .required('Required')
+    .url('The "Movie url" field is not a valid URL.'),
+  overview: Yup.string().required('Required'),
+  runtime: Yup.number()
+    .required('Required')
+    .typeError('The "Runtime" field must be a Number.')
+    .positive('The "Runtime" field must be a Positive Number.'),
+  genres: Yup.array().min(1, 'The "Genres" field must have at least 1 items'),
+});
 
 export const EditMovieForm: FC<EditMovieFormProps> = ({ hideEdit }) => {
   const posterId = useSelector(({ movies: { posterId } }) => posterId);
   const movie = useSelector(({ movies: { items } }) =>
     items.find((movie) => movie.id === posterId),
   );
-  const dispatch = useDispatch();
-  const [values, setValues] = useState({ ...initialValues, ...movie });
-
-  const handleOnChange = useCallback(
-    ({ target }) => {
-      const value = target.type === 'checkbox' ? target.checked : target.value;
-
-      setValues({
-        ...values,
-        [target.name]: value,
-      });
-    },
-    [values],
+  const initialValues = { ...initialValue, ...movie };
+  const { fetchData: fetchEditMovie } = useApiRequest(
+    'put',
+    API_BASE,
+    editMovie,
   );
 
-  const handleOnSelect = useCallback(
-    (selected) => {
-      setValues({
-        ...values,
-        genres: selected,
-      });
-    },
-    [values],
-  );
+  const onSubmit = (values) => {
+    const body = {
+      ...values,
+      runtime: parseInt(values.runtime),
+      id: parseInt(values.id),
+    };
+    fetchEditMovie(undefined, body);
+    hideEdit();
+  };
 
-  const handleOnCalendar = useCallback(
-    (data) => {
-      const formattedDate = moment(data).format('YYYY-MM-DD');
+  const {
+    handleSubmit,
+    handleChange,
+    values,
+    errors,
+    touched,
+    resetForm,
+    setFieldValue,
+  } = useFormik({
+    initialValues,
+    onSubmit,
+    validationSchema,
+  });
 
-      setValues({
-        ...values,
-        release_date: formattedDate,
-      });
-    },
-    [values],
-  );
+  const handleOnSelect = (selected) => {
+    setFieldValue('genres', selected);
+  };
 
-  const handleSubmit = useCallback(
-    (event: FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
+  const handleOnCalendar = (data) => {
+    const formattedDate = moment(data).format('YYYY-MM-DD');
 
-      dispatch(editMovie(values));
-      hideEdit();
-    },
-    [values],
-  );
+    setFieldValue('release_date', formattedDate);
+  };
 
   return (
     <EditMovieFormWrapper>
@@ -88,79 +99,106 @@ export const EditMovieForm: FC<EditMovieFormProps> = ({ hideEdit }) => {
         <CloseButton onClick={hideEdit} />
         <EditMovieFormTitle>Edit Movie</EditMovieFormTitle>
         <EditMovieFormInner onSubmit={handleSubmit}>
-          <Input
-            label="Movie id"
-            name="id"
-            type="text"
-            placeholder="313369"
-            onChange={handleOnChange}
-            value={values.id}
-            autoComplete="off"
-          />
-          <Input
-            label="Title"
-            name="title"
-            type="text"
-            placeholder="Moana"
-            onChange={handleOnChange}
-            value={values.title}
-            autoComplete="off"
-          />
+          <div>
+            <Input
+              label="Movie id"
+              name="id"
+              type="text"
+              onChange={handleChange}
+              value={values.id}
+              autoComplete="off"
+              disabled
+            />
+            {
+              <EditMovieFormError>
+                {touched.id && errors.id ? errors.id : ''}
+              </EditMovieFormError>
+            }
+          </div>
+          <div>
+            <Input
+              label="Title"
+              name="title"
+              type="text"
+              onChange={handleChange}
+              value={values.title}
+              autoComplete="off"
+            />
+            {
+              <EditMovieFormError>
+                {touched.title && errors.title ? errors.title : ''}
+              </EditMovieFormError>
+            }
+          </div>
           <ReleaseDatePicker
             name="release_date"
+            type="text"
             onChange={handleOnCalendar}
             value={values['release_date']}
           />
-          <Input
-            label="Movie url"
-            name="poster_path"
-            type="text"
-            placeholder="www.moana.com"
-            onChange={handleOnChange}
-            value={values['poster_path']}
-            autoComplete="off"
-          />
-          <Input
-            label="Rating"
-            name="rating"
-            type="text"
-            placeholder="7.8"
-            onChange={handleOnChange}
-            value={values.rating}
-            autoComplete="off"
-          />
-          <Select
-            name="genres"
-            onChange={handleOnSelect}
-            value={values.genres}
-            selected={values.genres}
-          />
-          <Input
-            label="Runtime"
-            name="runtime"
-            type="text"
-            placeholder="Runtime here"
-            onChange={handleOnChange}
-            value={values.runtime}
-            autoComplete="off"
-          />
-          <Input
-            label="Overview"
-            name="overview"
-            type="text"
-            placeholder="Overview here"
-            onChange={handleOnChange}
-            value={values.overview}
-            autoComplete="off"
-          />
+          <div>
+            <Input
+              label="Movie url"
+              name="poster_path"
+              type="text"
+              onChange={handleChange}
+              value={values['poster_path']}
+              autoComplete="off"
+            />
+            {
+              <EditMovieFormError>
+                {touched['poster_path'] && errors['poster_path']
+                  ? errors['poster_path']
+                  : ''}
+              </EditMovieFormError>
+            }
+          </div>
+          <div>
+            <Select
+              name="genres"
+              onChange={handleOnSelect}
+              value={values.genres}
+              selected={values.genres}
+            />
+            {
+              <EditMovieFormError>
+                {touched.genres && errors.genres ? errors.genres : ''}
+              </EditMovieFormError>
+            }
+          </div>
+          <div>
+            <Input
+              label="Runtime"
+              name="runtime"
+              type="text"
+              onChange={handleChange}
+              value={values.runtime}
+              autoComplete="off"
+            />
+            {
+              <EditMovieFormError>
+                {touched.runtime && errors.runtime ? errors.runtime : ''}
+              </EditMovieFormError>
+            }
+          </div>
+          <div>
+            <Input
+              label="Overview"
+              name="overview"
+              type="text"
+              onChange={handleChange}
+              value={values.overview}
+              autoComplete="off"
+            />
+            {
+              <EditMovieFormError>
+                {touched.overview && errors.overview ? errors.overview : ''}
+              </EditMovieFormError>
+            }
+          </div>
         </EditMovieFormInner>
         <EditMovieButtonContainer>
-          <Button
-            reset
-            type="reset"
-            onClick={() => setValues(initialValues)}
-            text="Reset"
-          />
+          <Button reset type="reset" onClick={() => resetForm()} text="Reset" />
           <Button submit type="submit" onClick={handleSubmit} text="Save" />
         </EditMovieButtonContainer>
       </EditMovieFormContainer>
