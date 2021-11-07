@@ -1,16 +1,11 @@
 import { Button } from 'components/button';
 import { Logo } from 'components/logo';
 import { MovieDetails } from 'components/movie-details';
-import { IMovieDetails } from 'components/movies-list/posters/types';
 import { SearchBlock } from 'components/search-block';
 import React, { FC, SyntheticEvent, useCallback } from 'react';
+import { Route, useParams } from 'react-router-dom';
 import { HeaderWrapper } from './styles';
-interface HeaderProps {
-  loadingMovieDetails: boolean;
-  errorMovieDetails: boolean;
-  movieDetails: IMovieDetails;
-  hide: () => void;
-}
+import { HeaderProps } from './types';
 
 export const Header: FC<HeaderProps> = ({
   hide,
@@ -18,10 +13,11 @@ export const Header: FC<HeaderProps> = ({
   loadingMovieDetails,
   errorMovieDetails,
 }) => {
+  const { id } = useParams();
+  console.log(id);
+
   const handleOnClick = useCallback((event: SyntheticEvent): void => {
     event.preventDefault();
-
-    console.log('click: ', event);
   }, []);
 
   const showByCondition = errorMovieDetails || movieDetails;
@@ -43,11 +39,13 @@ export const Header: FC<HeaderProps> = ({
         )}
       </div>
       {showByCondition && (
-        <MovieDetails
-          movieDetails={movieDetails}
-          loadingMovieDetails={loadingMovieDetails}
-          errorMovieDetails={errorMovieDetails}
-        />
+        <Route path={`film/${id}`}>
+          <MovieDetails
+            movieDetails={movieDetails}
+            loadingMovieDetails={loadingMovieDetails}
+            errorMovieDetails={errorMovieDetails}
+          />
+        </Route>
       )}
       {!showByCondition && <SearchBlock />}
     </HeaderWrapper>
