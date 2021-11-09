@@ -7,6 +7,7 @@ import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { searchMovies } from 'redux/actions';
 import { encodeURL } from 'utils/utils';
+import { ParamTypes } from './types';
 
 export const SearchMovies = () => {
   const {
@@ -24,7 +25,7 @@ export const SearchMovies = () => {
     searchMovies,
   );
 
-  const { slug } = useParams();
+  const { slug } = useParams<ParamTypes>();
   const encode = encodeURL(slug);
 
   useEffect(() => {

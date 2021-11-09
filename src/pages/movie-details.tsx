@@ -4,6 +4,7 @@ import useMoreDetailsMovie from 'hooks/useMoreDetailsMovie';
 import { ModalsContext } from 'modal-context';
 import React, { memo, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { ParamTypes } from './types';
 
 const MovieDetails = () => {
   const {
@@ -13,7 +14,7 @@ const MovieDetails = () => {
     setLoadingMovieDetails,
     setErrorMovieDetails,
   } = useContext(ModalsContext);
-  const { id } = useParams();
+  const { id } = useParams<ParamTypes>();
   const {
     movieDetails,
     loadingMovieDetails,

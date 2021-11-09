@@ -2,6 +2,7 @@ import { Button } from 'components/button';
 import { Logo } from 'components/logo';
 import { MovieDetails } from 'components/movie-details';
 import { SearchBlock } from 'components/search-block';
+import { ParamTypes } from 'pages/types';
 import React, { FC, SyntheticEvent, useCallback } from 'react';
 import { Route, useParams } from 'react-router-dom';
 import { HeaderWrapper } from './styles';
@@ -13,7 +14,7 @@ export const Header: FC<HeaderProps> = ({
   loadingMovieDetails,
   errorMovieDetails,
 }) => {
-  const { id } = useParams();
+  const { id } = useParams<ParamTypes>();
   console.log(id);
 
   const handleOnClick = useCallback((event: SyntheticEvent): void => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router';
+import { Switch, Route } from 'react-router-dom';
 import { Home, NoMatch, SearchMovies } from 'pages';
 import MovieDetails from 'pages/movie-details';
 

@@ -1,5 +1,5 @@
 import React, { FC, SyntheticEvent, useCallback } from 'react';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { HeaderWrapper } from './styles';
 import { SearchHeaderProps } from './types';
 import { Button } from 'components/button';
