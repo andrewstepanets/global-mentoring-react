@@ -1,7 +1,7 @@
 import { useShowModal } from 'hooks';
 import React, { createContext, useState } from 'react';
 
-export const ModalsContext = createContext(null);
+export const ModalsContext = createContext(undefined);
 
 const ModalsContextProvider = ({ children }) => {
   const [movieDetails, setMovieDetails] = useState(null);
@@ -36,3 +36,5 @@ const ModalsContextProvider = ({ children }) => {
     </ModalsContext.Provider>
   );
 };
+
+export default ModalsContextProvider;
