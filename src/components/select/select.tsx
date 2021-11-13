@@ -1,5 +1,5 @@
 import { SELECT_OPTIONS } from '@constants';
-import React, { FC, useCallback, useState } from 'react';
+import * as React from 'react';
 import {
   SelectInput,
   SelectLabel,
@@ -10,10 +10,10 @@ import {
 } from './styles';
 import { SelectProps } from './types';
 
-export const Select: FC<SelectProps> = ({ selected, onChange }) => {
-  const [isOpen, setOpen] = useState(false);
+export const Select: React.FC<SelectProps> = ({ selected, onChange }) => {
+  const [isOpen, setOpen] = React.useState(false);
 
-  const handleOnSelected = useCallback(
+  const handleOnSelected = React.useCallback(
     (selectedOption) => {
       if (selected.includes(selectedOption)) {
         const newSelected = selected.filter(

@@ -1,5 +1,5 @@
 import { DropdownMenu } from 'components/dropdown-menu';
-import React, { FC, useCallback } from 'react';
+import * as React from 'react';
 import { PosterItemProps } from '../types';
 import {
   PostersGenre,
@@ -13,13 +13,13 @@ import {
 
 import defaultImgMovie from '../../../../assets/images/fallback_movie.png';
 
-export const PosterItem: FC<PosterItemProps> = ({
+export const PosterItem: React.FC<PosterItemProps> = ({
   genre,
   poster,
   hideEdit,
   hideDelete,
 }: any) => {
-  const addDefaultSrc = useCallback(({ target }) => {
+  const addDefaultSrc = React.useCallback(({ target }) => {
     target.src = defaultImgMovie;
     target.alt = 'image not found';
   }, []);

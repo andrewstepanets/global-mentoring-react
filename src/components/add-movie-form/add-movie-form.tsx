@@ -6,7 +6,7 @@ import { Select } from 'components/select';
 import { useFormik } from 'formik';
 import { useApiRequest } from 'hooks/useApiRequest';
 import moment from 'moment';
-import React, { FC, useEffect } from 'react';
+import * as React from 'react';
 import { addMovie } from 'redux/actions';
 import * as Yup from 'yup';
 import {
@@ -18,12 +18,7 @@ import {
   AddMovieFormWrapper,
   CloseButton,
 } from './styles';
-
-interface AddMovieFormProps {
-  isShowingAdd: boolean;
-  hideAdd: () => void;
-  hideCongratulations: any;
-}
+import { AddMovieFormProps } from './types';
 
 const initialValues = {
   title: '',
@@ -48,7 +43,7 @@ const validationSchema = Yup.object({
   genres: Yup.array().min(1, 'The "Genres" field must have at least 1 items'),
 });
 
-export const AddMovieForm: FC<AddMovieFormProps> = ({
+export const AddMovieForm: React.FC<AddMovieFormProps> = ({
   hideAdd,
   hideCongratulations,
 }) => {
@@ -58,7 +53,7 @@ export const AddMovieForm: FC<AddMovieFormProps> = ({
     addMovie,
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     const close = (event) => {
       if (event.keyCode === 27) {
         event.preventDefault();

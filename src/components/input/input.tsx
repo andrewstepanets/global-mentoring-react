@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, forwardRef, Ref } from 'react';
+import * as React from 'react';
 import { InputBlock } from './styles';
 
 export interface InputProps {
@@ -11,13 +11,13 @@ export interface InputProps {
   disabled?: boolean;
   placeholder?: string;
   search?: boolean;
-  onChange: (event: FormEvent<HTMLInputElement>) => void;
+  onChange: (event: React.FormEvent<HTMLInputElement>) => void;
   onClick?: () => void;
-  ref?: Ref<HTMLInputElement>;
+  ref?: React.Ref<HTMLInputElement>;
   onKeyDown?: any;
 }
 
-export const Input: FC<InputProps> = forwardRef(
+export const Input: React.FC<InputProps> = React.forwardRef(
   (
     {
       type,

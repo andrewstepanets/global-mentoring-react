@@ -1,12 +1,12 @@
 import { useShowModal } from 'hooks';
-import React, { createContext, useState } from 'react';
+import * as React from 'react';
 
-export const ModalsContext = createContext(null);
+export const ModalsContext = React.createContext(null);
 
 const ModalsContextProvider = ({ children }) => {
-  const [movieDetails, setMovieDetails] = useState(null);
-  const [loadingMovieDetails, setLoadingMovieDetails] = useState(true);
-  const [errorMovieDetails, setErrorMovieDetails] = useState(false);
+  const [movieDetails, setMovieDetails] = React.useState(null);
+  const [loadingMovieDetails, setLoadingMovieDetails] = React.useState(true);
+  const [errorMovieDetails, setErrorMovieDetails] = React.useState(false);
   const { isShowing: isShowingAdd, toggle: toggleAdd } = useShowModal();
   const { isShowing: isShowingEdit, toggle: toggleEdit } = useShowModal();
   const { isShowing: isShowingDelete, toggle: toggleDelete } = useShowModal();
