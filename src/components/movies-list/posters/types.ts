@@ -20,3 +20,10 @@ export interface PostersProps {
   hideEdit: () => void;
   hideDelete: () => void;
 }
+
+export interface PosterItemProps extends PostersProps {
+  poster: IMovieDetails;
+  genre: string[];
+  hideEdit: () => void;
+  hideDelete: () => void;
+}

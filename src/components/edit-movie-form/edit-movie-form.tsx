@@ -6,7 +6,7 @@ import { Select } from 'components/select';
 import { useFormik } from 'formik';
 import { useApiRequest } from 'hooks/useApiRequest';
 import moment from 'moment';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { editMovie } from 'redux/actions';
 import * as Yup from 'yup';
@@ -58,6 +58,18 @@ export const EditMovieForm: FC<EditMovieFormProps> = ({ hideEdit }) => {
     API_BASE,
     editMovie,
   );
+
+  useEffect(() => {
+    const close = (event) => {
+      if (event.keyCode === 27) {
+        event.preventDefault();
+        hideEdit();
+      }
+    };
+    window.addEventListener('keydown', close);
+
+    return () => window.removeEventListener('keydown', close);
+  }, [hideEdit]);
 
   const onSubmit = (values) => {
     const body = {
@@ -135,6 +147,7 @@ export const EditMovieForm: FC<EditMovieFormProps> = ({ hideEdit }) => {
             type="text"
             onChange={handleOnCalendar}
             value={values['release_date']}
+            onKeyDown={(event) => event.preventDefault()}
           />
           <div>
             <Input

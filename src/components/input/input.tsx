@@ -1,4 +1,4 @@
-import React, { FC, FormEvent } from 'react';
+import React, { FC, FormEvent, forwardRef, Ref } from 'react';
 import { InputBlock } from './styles';
 
 export interface InputProps {
@@ -13,29 +13,37 @@ export interface InputProps {
   search?: boolean;
   onChange: (event: FormEvent<HTMLInputElement>) => void;
   onClick?: () => void;
+  ref?: Ref<HTMLInputElement>;
+  onKeyDown?: any;
 }
 
-export const Input: FC<InputProps> = ({
-  type,
-  placeholder,
-  onChange,
-  value,
-  label,
-  name,
-  autoComplete,
-  disabled,
-  ...props
-}) => (
-  <InputBlock placeholder={placeholder} {...props}>
-    {label && <label htmlFor="input-field">{label}</label>}
-    <input
-      type={type}
-      placeholder={placeholder}
-      onChange={onChange}
-      value={value}
-      name={name}
-      autoComplete={autoComplete}
-      disabled={disabled}
-    />
-  </InputBlock>
+export const Input: FC<InputProps> = forwardRef(
+  (
+    {
+      type,
+      placeholder,
+      onChange,
+      value,
+      label,
+      name,
+      autoComplete,
+      disabled,
+      ...props
+    },
+    ref,
+  ) => (
+    <InputBlock {...props}>
+      {label && <label htmlFor="input-field">{label}</label>}
+      <input
+        type={type}
+        placeholder={placeholder}
+        onChange={onChange}
+        value={value}
+        name={name}
+        autoComplete={autoComplete}
+        disabled={disabled}
+        ref={ref}
+      />
+    </InputBlock>
+  ),
 );

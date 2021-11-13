@@ -1,11 +1,14 @@
-import { API_BASE, API_FILTER, API_PAGE } from '@constants';
+import { API_BASE, API_FILTER, API_PAGE, API_SEARCH } from '@constants';
 import { Button } from 'components/button';
 import { useApiRequest } from 'hooks/useApiRequest';
+import { ParamTypes } from 'pages/types';
 import React, { FC, memo, useCallback, useEffect } from 'react';
 import Loader from 'react-loader-spinner';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { fetchMovies, filterMovies } from 'redux/actions';
 import shortid from 'shortid';
+import { encodeURL } from 'utils/utils';
 import { PosterItem } from './poster-item';
 import {
   NumberMovies,
@@ -27,15 +30,20 @@ const Posters: FC<PostersProps> = ({
   const currentPage = useSelector(({ movies: { currentPage } }) => currentPage);
   const error = useSelector(({ movies: { error } }) => error);
   const loading = useSelector(({ movies: { loading } }) => loading);
+  const totalPages = useSelector(({ movies: { totalPages } }) => totalPages);
   const { fetchData: getMovies } = useApiRequest('get', API_BASE, fetchMovies);
   const { fetchData: getMoreMovies } = useApiRequest(
     'get',
     API_PAGE,
     fetchMovies,
   );
+  const { slug } = useParams<ParamTypes>();
+  const encode = encodeURL(slug);
   const { fetchData: filteredMovies } = useApiRequest(
     'get',
-    `${API_FILTER}${filterItem}`,
+    encode !== 'undefined'
+      ? `${API_SEARCH}${encode}&searchBy=title`
+      : `${API_FILTER}${filterItem}`,
     filterMovies,
   );
 
@@ -44,24 +52,12 @@ const Posters: FC<PostersProps> = ({
   }, []);
 
   const handleLoadMoreMovies = useCallback(() => {
-    if (filterItem !== 'all') {
+    if (filterItem !== 'all' || encode !== 'undefined') {
       filteredMovies(`&offset=${currentPage}`);
     } else {
       getMoreMovies(currentPage);
     }
   }, [currentPage, filterItem]);
-
-  useEffect(() => {
-    if (currentPage === 1) {
-      return;
-    } else {
-      window.scrollTo({
-        left: 0,
-        top: document.body.scrollHeight,
-        behavior: 'smooth',
-      });
-    }
-  }, [currentPage]);
 
   const posters = movies.map((poster) => {
     if (!poster.genres) poster.genres = [];
@@ -86,7 +82,7 @@ const Posters: FC<PostersProps> = ({
 
   return (
     <PostersWrapper>
-      {error && <PostersError>No Movie Found</PostersError>}
+      {error && <PostersError>{error}</PostersError>}
       {loading && (
         <Loader type="Circles" color="#00BFFF" height={80} width={80} />
       )}
@@ -97,12 +93,14 @@ const Posters: FC<PostersProps> = ({
             <span>{movies.length}</span> movie found
           </NumberMovies>
           <PostersList>{posters}</PostersList>
-          <Button
-            load
-            text="Load more posters"
-            type="button"
-            onClick={handleLoadMoreMovies}
-          />
+          {totalPages > 1 && (
+            <Button
+              load
+              text="Load more posters"
+              type="button"
+              onClick={handleLoadMoreMovies}
+            />
+          )}
         </>
       )}
     </PostersWrapper>

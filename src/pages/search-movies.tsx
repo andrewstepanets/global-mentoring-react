@@ -1,6 +1,6 @@
 import { API_SEARCH } from '@constants';
 import { AddHeader } from 'components/header';
-import { MoviesList } from 'components/movies-list';
+import MoviesList from 'components/movies-list/movies-list';
 import { useApiRequest } from 'hooks/useApiRequest';
 import { ModalsContext } from 'modal-context';
 import React, { useContext, useEffect } from 'react';

@@ -1,7 +1,7 @@
 import { useShowModal } from 'hooks';
 import React, { createContext, useState } from 'react';
 
-export const ModalsContext = createContext(undefined);
+export const ModalsContext = createContext(null);
 
 const ModalsContextProvider = ({ children }) => {
   const [movieDetails, setMovieDetails] = useState(null);

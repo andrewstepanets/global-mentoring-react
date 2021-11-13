@@ -6,7 +6,7 @@ import { Select } from 'components/select';
 import { useFormik } from 'formik';
 import { useApiRequest } from 'hooks/useApiRequest';
 import moment from 'moment';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { addMovie } from 'redux/actions';
 import * as Yup from 'yup';
 import {
@@ -20,6 +20,7 @@ import {
 } from './styles';
 
 interface AddMovieFormProps {
+  isShowingAdd: boolean;
   hideAdd: () => void;
   hideCongratulations: any;
 }
@@ -56,6 +57,18 @@ export const AddMovieForm: FC<AddMovieFormProps> = ({
     API_BASE,
     addMovie,
   );
+
+  useEffect(() => {
+    const close = (event) => {
+      if (event.keyCode === 27) {
+        event.preventDefault();
+        hideAdd();
+      }
+    };
+    window.addEventListener('keydown', close);
+
+    return () => window.removeEventListener('keydown', close);
+  }, [hideAdd]);
 
   const onSubmit = (values) => {
     const body = { ...values, runtime: parseInt(values.runtime) };
@@ -114,6 +127,8 @@ export const AddMovieForm: FC<AddMovieFormProps> = ({
             type="text"
             value={values['release_date']}
             onChange={handleOnCalendar}
+            placeholder="Select date"
+            onKeyDown={(event) => event.preventDefault()}
           />
           <div>
             <Input

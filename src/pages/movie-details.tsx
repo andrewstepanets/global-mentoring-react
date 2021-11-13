@@ -1,5 +1,5 @@
 import { SearchHeader } from 'components/header';
-import { MoviesList } from 'components/movies-list';
+import MoviesList from 'components/movies-list/movies-list';
 import useMoreDetailsMovie from 'hooks/useMoreDetailsMovie';
 import { ModalsContext } from 'modal-context';
 import React, { memo, useContext, useEffect } from 'react';

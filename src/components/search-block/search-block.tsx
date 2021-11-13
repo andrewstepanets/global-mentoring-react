@@ -48,6 +48,7 @@ export const SearchBlock: FC = () => {
             placeholder="What do you want to watch?"
             onChange={handleOnChange}
             value={value}
+            ref={inputRef}
           />
           <Link to={`/search/${encode}`}>
             <Button

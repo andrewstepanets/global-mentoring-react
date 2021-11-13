@@ -9,10 +9,10 @@ import { HeaderWrapper } from './styles';
 import { HeaderProps } from './types';
 
 export const Header: FC<HeaderProps> = ({
-  hide,
   movieDetails,
   loadingMovieDetails,
   errorMovieDetails,
+  hideAdd,
 }) => {
   const { id } = useParams<ParamTypes>();
   console.log(id);
@@ -36,7 +36,7 @@ export const Header: FC<HeaderProps> = ({
           />
         )}
         {!showByCondition && (
-          <Button button type="button" onClick={hide} text="+ Add Movie" />
+          <Button button type="button" onClick={hideAdd} text="+ Add Movie" />
         )}
       </div>
       {showByCondition && (

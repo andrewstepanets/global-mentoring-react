@@ -21,6 +21,7 @@ export const Modals = () => {
       {isShowingAdd && (
         <AddMovieForm
           hideAdd={toggleAdd}
+          isShowingAdd={isShowingAdd}
           hideCongratulations={toggleCongratulations}
         />
       )}
