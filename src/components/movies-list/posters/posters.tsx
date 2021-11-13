@@ -89,7 +89,7 @@ const Posters: FC<PostersProps> = ({
       {!error && !loading && (
         <>
           {' '}
-          <NumberMovies>
+          <NumberMovies id="number-of-movies">
             <span>{movies.length}</span> movie found
           </NumberMovies>
           <PostersList>{posters}</PostersList>

@@ -37,7 +37,7 @@ export const SearchBlock: FC = () => {
 
   return (
     <SearchWrapper>
-      <SearchTitle>Find your movie</SearchTitle>
+      <SearchTitle id="search-movie-title">Find your movie</SearchTitle>
       <form onSubmit={(event: SyntheticEvent) => event.preventDefault()}>
         <InputSearchContainer>
           <Input

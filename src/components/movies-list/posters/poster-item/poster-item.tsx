@@ -31,13 +31,13 @@ export const PosterItem: React.FC<PosterItemProps> = ({
         hideDelete={hideDelete}
         posterId={poster.id}
       />
-      <PostersLink to={`/film/${poster.id}`}>
+      <PostersLink id="poster-link" to={`/film/${poster.id}`}>
         <PostersImg
           src={poster.poster_path}
           alt={poster.title}
           onError={addDefaultSrc}
         />
-        <PostersWrapTitle>
+        <PostersWrapTitle id="poster-title">
           <PostersTitle>{poster.title}</PostersTitle>
           <PostersTitleYear>{poster.release_date}</PostersTitleYear>
         </PostersWrapTitle>
