@@ -1,7 +1,7 @@
 import React, { FC, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useShowModal } from '../../hooks/useShowModal';
-import { deleteMovieId } from '../../redux/actions';
+import { putPosterId } from '../../redux/actions';
 import {
   DropdownMenuButton,
   DropdownMenuContainer,
@@ -28,12 +28,12 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({
 
   const handleOnDelete = useCallback(() => {
     hideDelete();
-    dispatch(deleteMovieId(posterId));
+    dispatch(putPosterId(posterId));
   }, []);
 
   const handleOnEdit = useCallback(() => {
     hideEdit();
-    dispatch(deleteMovieId(posterId));
+    dispatch(putPosterId(posterId));
   }, []);
 
   return (

@@ -7,6 +7,7 @@ export const ReleaseDatePickerWrapper = styled.div`
   flex-direction: column;
   position: relative;
   width: 100%;
+  margin-bottom: 10px;
   .react-datepicker__triangle {
     display: none;
   }

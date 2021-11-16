@@ -1,15 +1,12 @@
 import { combineReducers } from 'redux';
 import {
-  ADD_MOVIE_UI,
+  ADD_MOVIE,
   DELETE_MOVIE,
-  EDIT_MOVIE_UI,
-  ERROR_MOVIES,
-  FETCH_LOAD_MORE_MOVIES,
+  EDIT_MOVIE,
   FETCH_MOVIES,
+  FILTER_ITEM,
   FILTER_MOVIES,
-  LOADING_MOVIES,
   POSTER_ID,
-  SORT_BY_MOVIES,
 } from './types';
 
 export const initialState = {
@@ -17,8 +14,9 @@ export const initialState = {
   currentPage: 0,
   totalPages: 0,
   error: null,
-  loading: false,
+  loading: true,
   posterId: null,
+  filterItem: 'all',
 };
 
 const movies = (state = initialState, { type, payload }) => {
@@ -26,20 +24,11 @@ const movies = (state = initialState, { type, payload }) => {
     case FETCH_MOVIES:
       return {
         ...state,
-        items: payload.data,
-        currentPage: payload.offset,
-        totalPages: payload.totalAmount / payload.limit - payload.offset,
-        error: null,
-        loading: false,
-      };
-
-    case FETCH_LOAD_MORE_MOVIES:
-      return {
-        ...state,
         items: [...state.items, ...payload.data],
-        currentPage: payload.offset,
-        totalPages: payload.totalAmount / payload.limit - payload.offset,
-        error: null,
+        currentPage: payload.offset + 1,
+        totalPages: Math.floor(
+          payload.totalAmount / payload.limit - payload.offset,
+        ),
         loading: false,
       };
 
@@ -49,13 +38,14 @@ const movies = (state = initialState, { type, payload }) => {
         posterId: payload,
       };
 
-    case ADD_MOVIE_UI:
+    case ADD_MOVIE:
       return {
         ...state,
-        items: [payload, ...state.items],
+        items: [{ id: state.posterId, ...payload }, ...state.items],
+        loading: false,
       };
 
-    case EDIT_MOVIE_UI:
+    case EDIT_MOVIE:
       let updatedMovie = state.items.find((movie) => {
         return movie.id === payload.id;
       });
@@ -69,33 +59,28 @@ const movies = (state = initialState, { type, payload }) => {
     case DELETE_MOVIE:
       return {
         ...state,
-        items: [
-          ...state.items.filter((item) => item.id !== payload.id),
-          ...payload.data,
-        ],
+        items: [...state.items.filter((item) => item.id !== state.posterId)],
+        loading: false,
       };
 
     case FILTER_MOVIES:
       return {
         ...state,
-        items: payload.data,
+        items: [...state.items, ...payload.data],
+        currentPage: payload.offset + 1,
+        totalPages: Math.floor(
+          payload.totalAmount / payload.limit - payload.offset,
+        ),
+        error: null,
+        loading: false,
       };
 
-    case SORT_BY_MOVIES:
+    case FILTER_ITEM:
       return {
         ...state,
-        items: payload.data,
-      };
-
-    case ERROR_MOVIES:
-      return {
-        ...state,
-        error: true,
-      };
-
-    case LOADING_MOVIES:
-      return {
-        ...state,
+        currentPage: 0,
+        filterItem: payload,
+        items: [],
         loading: true,
       };
 

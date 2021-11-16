@@ -2,14 +2,15 @@ import React, { FC, FormEvent } from 'react';
 import { InputBlock } from './styles';
 
 export interface InputProps {
-  autoComplete?: string;
-  calendar?: string;
   name: string;
   label: string | null;
-  placeholder: string;
-  search?: boolean;
   type: string;
   value: string;
+  autoComplete?: string;
+  calendar?: string;
+  disabled?: boolean;
+  placeholder?: string;
+  search?: boolean;
   onChange: (event: FormEvent<HTMLInputElement>) => void;
   onClick?: () => void;
 }
@@ -22,6 +23,7 @@ export const Input: FC<InputProps> = ({
   label,
   name,
   autoComplete,
+  disabled,
   ...props
 }) => (
   <InputBlock placeholder={placeholder} {...props}>
@@ -33,6 +35,7 @@ export const Input: FC<InputProps> = ({
       value={value}
       name={name}
       autoComplete={autoComplete}
+      disabled={disabled}
     />
   </InputBlock>
 );

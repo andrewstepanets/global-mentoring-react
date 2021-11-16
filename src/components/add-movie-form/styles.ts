@@ -58,3 +58,10 @@ export const CloseButton = styled(AiOutlineClose)`
     color: #f65261;
   }
 `;
+
+export const AddMovieFormError = styled.div`
+  height: 10px;
+  padding-top: 3px;
+  font-size: 11px;
+  color: ${colors.coral};
+`;
