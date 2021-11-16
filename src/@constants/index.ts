@@ -17,4 +17,5 @@ export const API_BASE = 'http://localhost:4000/movies';
 export const API_PAGE = `${API_BASE}?offset=`;
 export const API_FILTER = `${API_BASE}?filter=`;
 export const API_SORT_BY = `${API_BASE}?sortBy=`;
+export const API_SEARCH = `${API_BASE}?search=`;
 export const API_DELETE = `${API_BASE}/`;

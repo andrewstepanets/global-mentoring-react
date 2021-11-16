@@ -5,25 +5,35 @@ import React, {
   FormEvent,
   SyntheticEvent,
   useCallback,
+  useEffect,
+  useRef,
   useState,
 } from 'react';
+import { Link } from 'react-router-dom';
+import { encodeURL } from 'utils/utils';
 import { InputSearchContainer, SearchTitle, SearchWrapper } from './styles';
 
 export const SearchBlock: FC = () => {
+  const inputRef = useRef(null);
   const [value, setValue] = useState('');
+  const encode = encodeURL(value);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   const handleOnChange = useCallback(
     (event: FormEvent<HTMLInputElement>): void => {
-      console.log('input: ', event.currentTarget.value);
-
       setValue(event.currentTarget.value);
     },
-    [],
+    [value],
   );
 
-  const handleSubmit = (event: FormEvent<HTMLInputElement>): void => {
-    console.log('Searching......');
-  };
+  const handleOnSearch = useCallback(() => {
+    setValue('');
+  }, [value]);
 
   return (
     <SearchWrapper>
@@ -39,7 +49,14 @@ export const SearchBlock: FC = () => {
             onChange={handleOnChange}
             value={value}
           />
-          <Button submit type="submit" onClick={handleSubmit} text="Search" />
+          <Link to={`/search/${encode}`}>
+            <Button
+              submit
+              type="submit"
+              onClick={handleOnSearch}
+              text="Search"
+            />
+          </Link>
         </InputSearchContainer>
       </form>
     </SearchWrapper>
