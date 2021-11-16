@@ -12,6 +12,8 @@ import { MainPageGrid } from 'styles/main-page-grid';
 
 const App = () => {
   const [movieDetails, setMovieDetails]: any = useState(null);
+  const [loadingMovieDetails, setLoadingMovieDetails]: any = useState(true);
+  const [errorMovieDetails, setErrorMovieDetails]: any = useState(false);
   const { isShowing: isShowingAdd, toggle: toggleAdd } = useShowModal();
   const { isShowing: isShowingEdit, toggle: toggleEdit } = useShowModal();
   const { isShowing: isShowingDelete, toggle: toggleDelete } = useShowModal();
@@ -23,8 +25,19 @@ const App = () => {
         {isShowingAdd && <AddMovieForm hideAdd={toggleAdd} />}
         {isShowingEdit && <EditMovieForm hideEdit={toggleEdit} />}
         {isShowingDelete && <DeleteMovieForm hideDelete={toggleDelete} />}
-        <Header hide={toggleAdd} movieDetails={movieDetails} />
-        <MoviesList setMovieDetails={setMovieDetails} />
+        <Header
+          movieDetails={movieDetails}
+          loadingMovieDetails={loadingMovieDetails}
+          errorMovieDetails={errorMovieDetails}
+          hide={toggleAdd}
+        />
+        <MoviesList
+          setMovieDetails={setMovieDetails}
+          setLoadingMovieDetails={setLoadingMovieDetails}
+          setErrorMovieDetails={setErrorMovieDetails}
+          hideEdit={toggleEdit}
+          hideDelete={toggleDelete}
+        />
         <Footer />
       </MainPageGrid>
     </ErrorBoundary>

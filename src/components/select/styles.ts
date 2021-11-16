@@ -18,7 +18,7 @@ export const SelectTitle = styled.label`
   text-transform: uppercase;
 `;
 
-export const SelectMain = styled.select`
+export const SelectMain = styled.input`
   padding: 15px 20px;
   appearance: none;
   color: ${colors.grey_light};
@@ -27,7 +27,31 @@ export const SelectMain = styled.select`
   border: none;
   border-radius: 4px;
   outline: none;
+  cursor: pointer;
   background-color: ${rgbaMap(colorsRgba.rgba_grey_light, 0.3)};
   background: ${rgbaMap(colorsRgba.rgba_grey_light, 0.3)} url(${ArrowIcon})
     no-repeat 95%;
+`;
+
+export const SelectOver = styled.div`
+  position: absolute;
+  top: 100px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+`;
+
+export const SelectLabel = styled.label`
+  display: block;
+  padding: 5px;
+  font-size: 18px;
+  background-color: ${colors.grey};
+  :hover {
+    background-color: ${colors.coral};
+  }
+`;
+
+export const SelectInput = styled.input`
+  margin-left: 15px;
+  font-size: 30px;
 `;

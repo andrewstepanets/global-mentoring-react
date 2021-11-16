@@ -1,16 +1,25 @@
 import { Button } from 'components/button';
 import { Input } from 'components/input';
-import React, { FC, FormEvent, SyntheticEvent, useState } from 'react';
+import React, {
+  FC,
+  FormEvent,
+  SyntheticEvent,
+  useCallback,
+  useState,
+} from 'react';
 import { InputSearchContainer, SearchTitle, SearchWrapper } from './styles';
 
 export const SearchBlock: FC = () => {
   const [value, setValue] = useState('');
 
-  const handleOnChange = (event: FormEvent<HTMLInputElement>): void => {
-    console.log('input: ', event.currentTarget.value);
+  const handleOnChange = useCallback(
+    (event: FormEvent<HTMLInputElement>): void => {
+      console.log('input: ', event.currentTarget.value);
 
-    setValue(event.currentTarget.value);
-  };
+      setValue(event.currentTarget.value);
+    },
+    [],
+  );
 
   const handleSubmit = (event: FormEvent<HTMLInputElement>): void => {
     console.log('Searching......');
@@ -30,7 +39,7 @@ export const SearchBlock: FC = () => {
             onChange={handleOnChange}
             value={value}
           />
-          <Button submit type="submit" onClick={null} text="Search" />
+          <Button submit type="submit" onClick={handleSubmit} text="Search" />
         </InputSearchContainer>
       </form>
     </SearchWrapper>

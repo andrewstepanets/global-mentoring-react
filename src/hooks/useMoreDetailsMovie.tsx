@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import { API_BASE } from '../@constants/index';
 
 const useMoreDetailsMovie = () => {
-  const [movieDetails, setMovieDetails]: any = useState(null);
+  const [movieDetails, setMovieDetails] = useState(null);
   const [loadingMovieDetails, setLoadingMovieDetails] = useState(true);
   const [errorMovieDetails, setErrorMovieDetails] = useState(false);
 

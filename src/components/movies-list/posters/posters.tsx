@@ -1,8 +1,8 @@
-import { API_PAGE } from '@constants';
+import { getMoreMovies, getMovies } from 'api';
 import { Button } from 'components/button';
-import usePostersFetch from 'hooks/usePostersFetch';
-import React, { FC, memo, useCallback } from 'react';
+import React, { FC, memo, useCallback, useEffect } from 'react';
 import Loader from 'react-loader-spinner';
+import { useDispatch, useSelector } from 'react-redux';
 import shortid from 'shortid';
 import { PosterItem } from './poster-item';
 import {
@@ -11,34 +11,39 @@ import {
   PostersList,
   PostersWrapper,
 } from './styles';
+import { PostersProps } from './types';
 
-interface PostersProps {
-  setMovieDetails: {
-    title: string;
-    tagline: string;
-    vote_average: number;
-    vote_count: number;
-    release_date: string;
-    poster_path: string;
-    overview: string;
-    budget: number;
-    revenue: number;
-    runtime: number;
-    genres: string[];
-    id: number;
-  };
-}
+const Posters: FC<PostersProps> = ({
+  setMovieDetails,
+  setLoadingMovieDetails,
+  setErrorMovieDetails,
+  hideEdit,
+  hideDelete,
+}) => {
+  const dispatch = useDispatch();
+  const movies = useSelector(({ movies }) => movies);
+  const currentPage = useSelector(({ movies: { currentPage } }) => currentPage);
+  const error = useSelector(({ movies: { error } }) => error);
+  const loading = useSelector(({ movies: { loading } }) => loading);
 
-const Posters: FC<PostersProps> = ({ setMovieDetails }: any) => {
-  const { movies, error, loading, fetchMovies }: any = usePostersFetch();
-
-  const loadMorePosters = useCallback(() => {
-    const loadMorePostersEndpoint = `${API_PAGE}${movies.currentPage + 1}`;
-
-    fetchMovies(loadMorePostersEndpoint);
+  useEffect(() => {
+    dispatch(getMovies());
   }, []);
 
-  const posters = movies.movies.map((poster) => {
+  const handleLoadMoreMovies = useCallback(() => {
+    dispatch(getMoreMovies(currentPage));
+    console.log(currentPage);
+  }, [currentPage]);
+
+  useEffect(() => {
+    window.scrollTo({
+      left: 0,
+      top: document.body.scrollHeight,
+      behavior: 'smooth',
+    });
+  }, [currentPage]);
+
+  const posters = movies.items.map((poster) => {
     const genre = poster.genres.map((genre) => (
       <span key={shortid.generate()}> {genre}, </span>
     ));
@@ -47,8 +52,12 @@ const Posters: FC<PostersProps> = ({ setMovieDetails }: any) => {
       <PosterItem
         key={shortid.generate()}
         setMovieDetails={setMovieDetails}
+        setLoadingMovieDetails={setLoadingMovieDetails}
+        setErrorMovieDetails={setErrorMovieDetails}
         poster={poster}
         genre={genre}
+        hideEdit={hideEdit}
+        hideDelete={hideDelete}
       />
     );
   });
@@ -59,19 +68,21 @@ const Posters: FC<PostersProps> = ({ setMovieDetails }: any) => {
       {loading && (
         <Loader type="Circles" color="#00BFFF" height={80} width={80} />
       )}
-      <>
-        {' '}
-        <NumberMovies>
-          <span>{movies.movies.length}</span> movie found
-        </NumberMovies>
-        <PostersList>{posters}</PostersList>
-      </>
-      <Button
-        load
-        text="Load more posters"
-        type="button"
-        onClick={loadMorePosters}
-      />
+      {!error && !loading && (
+        <>
+          {' '}
+          <NumberMovies>
+            <span>{movies.items.length}</span> movie found
+          </NumberMovies>
+          <PostersList>{posters}</PostersList>
+          <Button
+            load
+            text="Load more posters"
+            type="button"
+            onClick={handleLoadMoreMovies}
+          />
+        </>
+      )}
     </PostersWrapper>
   );
 };

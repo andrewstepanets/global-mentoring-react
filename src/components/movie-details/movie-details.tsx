@@ -1,10 +1,13 @@
-import React, { FC, useCallback } from 'react';
-import defaultImgMovie from '../../assets/images/fallback_movie.png';
+import { IMovieDetails } from 'components/movies-list/posters/types';
+import React, { FC } from 'react';
+import Loader from 'react-loader-spinner';
+import { addDefaultSrc } from 'utils/utils';
 import {
   MovieDetailsArticle,
   MovieDetailsAverage,
   MovieDetailsDate,
   MovieDetailsDescription,
+  MovieDetailsError,
   MovieDetailsImage,
   MovieDetailsTime,
   MovieDetailsTitle,
@@ -15,49 +18,55 @@ import {
 } from './styles';
 
 interface MovieDetailsProps {
-  movieDetails: {
-    title: string;
-    tagline: string;
-    vote_average: number;
-    vote_count: number;
-    release_date: string;
-    poster_path: string;
-    overview: string;
-    budget: number;
-    revenue: number;
-    runtime: number;
-    genres: string[];
-    id: number;
-  };
+  loadingMovieDetails: boolean;
+  errorMovieDetails: boolean;
+  movieDetails: IMovieDetails;
 }
 
-export const MovieDetails: FC<MovieDetailsProps> = ({ movieDetails }) => {
-  console.log('componentMovieDetails: ', movieDetails);
-
-  const addDefaultSrc = useCallback(({ target }) => {
-    target.src = defaultImgMovie;
-    target.alt = 'Image not found';
-  }, []);
+export const MovieDetails: FC<MovieDetailsProps> = ({
+  movieDetails,
+  loadingMovieDetails,
+  errorMovieDetails,
+}) => {
+  const {
+    poster_path,
+    title,
+    vote_average,
+    tagline,
+    release_date,
+    runtime,
+    overview,
+  } = movieDetails;
 
   return (
     <MovieDetailsWrapper>
-      <MovieDetailsImage
-        src={movieDetails.poster_path}
-        alt={movieDetails.title}
-        onError={addDefaultSrc}
-      />
-      <MovieDetailsDescription>
-        <MovieDetailsTitleContainer>
-          <MovieDetailsTitle>{movieDetails.title}</MovieDetailsTitle>
-          <MovieDetailsAverage>{movieDetails.vote_average}</MovieDetailsAverage>
-        </MovieDetailsTitleContainer>
-        <MovieDetailsWin>{movieDetails.tagline}</MovieDetailsWin>
-        <MovieDetailsDate>
-          <MovieDetailsYear>{movieDetails.release_date}</MovieDetailsYear>
-          <MovieDetailsTime>{`${movieDetails.runtime} min`}</MovieDetailsTime>
-        </MovieDetailsDate>
-        <MovieDetailsArticle>{movieDetails.overview}</MovieDetailsArticle>
-      </MovieDetailsDescription>
+      {errorMovieDetails && (
+        <MovieDetailsError>No Movie Details Found</MovieDetailsError>
+      )}
+      {loadingMovieDetails && (
+        <Loader type="Circles" color="#00BFFF" height={80} width={80} />
+      )}
+      {!errorMovieDetails && !loadingMovieDetails && (
+        <>
+          <MovieDetailsImage
+            src={poster_path}
+            alt={title}
+            onError={addDefaultSrc}
+          />
+          <MovieDetailsDescription>
+            <MovieDetailsTitleContainer>
+              <MovieDetailsTitle>{title}</MovieDetailsTitle>
+              <MovieDetailsAverage>{vote_average}</MovieDetailsAverage>
+            </MovieDetailsTitleContainer>
+            <MovieDetailsWin>{tagline}</MovieDetailsWin>
+            <MovieDetailsDate>
+              <MovieDetailsYear>{release_date}</MovieDetailsYear>
+              <MovieDetailsTime>{`${runtime} min`}</MovieDetailsTime>
+            </MovieDetailsDate>
+            <MovieDetailsArticle>{overview}</MovieDetailsArticle>
+          </MovieDetailsDescription>
+        </>
+      )}
     </MovieDetailsWrapper>
   );
 };
