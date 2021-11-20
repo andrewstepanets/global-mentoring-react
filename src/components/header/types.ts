@@ -4,7 +4,7 @@ export interface HeaderProps {
   loadingMovieDetails: boolean;
   errorMovieDetails: boolean;
   movieDetails: IMovieDetails;
-  hide: () => void;
+  hideAdd: () => void;
 }
 
 export interface SearchHeaderProps {

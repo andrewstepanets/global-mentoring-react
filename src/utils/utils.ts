@@ -1,7 +1,7 @@
-export const encodeURL = (str) => {
+export const encodeURL = (str: string) => {
   return encodeURIComponent(str);
 };
 
-export const decodeURL = (str) => {
+export const decodeURL = (str: string) => {
   return decodeURIComponent(str);
 };

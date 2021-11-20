@@ -74,8 +74,8 @@ export const EditMovieForm: FC<EditMovieFormProps> = ({ hideEdit }) => {
   const onSubmit = (values) => {
     const body = {
       ...values,
-      runtime: parseInt(values.runtime),
-      id: parseInt(values.id),
+      runtime: parseInt(values.runtime, 10),
+      id: parseInt(values.id, 10),
     };
     fetchEditMovie(undefined, body);
     hideEdit();

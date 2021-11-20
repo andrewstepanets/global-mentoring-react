@@ -66,7 +66,7 @@ export const AddMovieForm: React.FC<AddMovieFormProps> = ({
   }, [hideAdd]);
 
   const onSubmit = (values) => {
-    const body = { ...values, runtime: parseInt(values.runtime) };
+    const body = { ...values, runtime: parseInt(values.runtime, 10) };
     fetchAddMovie(undefined, body);
     hideAdd();
     hideCongratulations();
