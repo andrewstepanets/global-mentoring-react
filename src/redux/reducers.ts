@@ -87,8 +87,6 @@ export const movies = (state = initialState, { type, payload }) => {
       };
 
     case SEARCH_MOVIES:
-      console.log('payload: ', payload);
-
       return {
         ...state,
         items: payload.data,

@@ -7,7 +7,7 @@ import { useFormik } from 'formik';
 import { useApiRequest } from 'hooks/useApiRequest';
 import moment from 'moment';
 import React, { FC, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import { editMovie } from 'redux/actions';
 import * as Yup from 'yup';
 import {
@@ -48,8 +48,10 @@ const validationSchema = Yup.object({
 });
 
 export const EditMovieForm: FC<EditMovieFormProps> = ({ hideEdit }) => {
-  const posterId = useSelector(({ movies: { posterId } }) => posterId);
-  const movie = useSelector(({ movies: { items } }) =>
+  const posterId = useSelector(
+    ({ movies: { posterId } }: RootStateOrAny) => posterId,
+  );
+  const movie = useSelector(({ movies: { items } }: RootStateOrAny) =>
     items.find((movie) => movie.id === posterId),
   );
   const initialValues = { ...initialValue, ...movie };

@@ -15,7 +15,6 @@ export const Header: FC<HeaderProps> = ({
   hideAdd,
 }) => {
   const { id } = useParams<ParamTypes>();
-  console.log(id);
 
   const handleOnClick = useCallback((event: SyntheticEvent): void => {
     event.preventDefault();

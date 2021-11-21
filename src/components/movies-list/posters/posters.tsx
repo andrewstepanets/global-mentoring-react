@@ -4,7 +4,7 @@ import { useApiRequest } from 'hooks/useApiRequest';
 import { ParamTypes } from 'pages/types';
 import React, { FC, memo, useCallback, useEffect } from 'react';
 import Loader from 'react-loader-spinner';
-import { useSelector } from 'react-redux';
+import { useSelector, RootStateOrAny } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchMovies, filterMovies } from 'redux/actions';
 import shortid from 'shortid';
@@ -25,12 +25,20 @@ const Posters: FC<PostersProps> = ({
   hideEdit,
   hideDelete,
 }) => {
-  const filterItem = useSelector(({ movies: { filterItem } }) => filterItem);
-  const movies = useSelector(({ movies: { items } }) => items);
-  const currentPage = useSelector(({ movies: { currentPage } }) => currentPage);
-  const error = useSelector(({ movies: { error } }) => error);
-  const loading = useSelector(({ movies: { loading } }) => loading);
-  const totalPages = useSelector(({ movies: { totalPages } }) => totalPages);
+  const filterItem = useSelector(
+    ({ movies: { filterItem } }: RootStateOrAny) => filterItem,
+  );
+  const movies = useSelector(({ movies: { items } }: RootStateOrAny) => items);
+  const currentPage = useSelector(
+    ({ movies: { currentPage } }: RootStateOrAny) => currentPage,
+  );
+  const error = useSelector(({ movies: { error } }: RootStateOrAny) => error);
+  const loading = useSelector(
+    ({ movies: { loading } }: RootStateOrAny) => loading,
+  );
+  const totalPages = useSelector(
+    ({ movies: { totalPages } }: RootStateOrAny) => totalPages,
+  );
   const { fetchData: getMovies } = useApiRequest('get', API_BASE, fetchMovies);
   const { fetchData: getMoreMovies } = useApiRequest(
     'get',
