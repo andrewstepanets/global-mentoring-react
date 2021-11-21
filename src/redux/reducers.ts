@@ -1,17 +1,19 @@
 import { combineReducers } from 'redux';
 import {
-  ADD_MOVIE,
-  DELETE_MOVIE,
-  EDIT_MOVIE,
   FETCH_MOVIES,
-  FILTER_ITEM,
-  FILTER_MOVIES,
   POSTER_ID,
+  DELETE_MOVIE,
+  ADD_MOVIE,
+  EDIT_MOVIE,
+  FILTER_MOVIES,
+  FILTER_ITEM,
+  SEARCH_MOVIES,
+  ERROR_MESSAGE,
 } from './types';
 
 export const initialState = {
   items: [],
-  currentPage: 0,
+  currentPage: 1,
   totalPages: 0,
   error: null,
   loading: true,
@@ -19,16 +21,17 @@ export const initialState = {
   filterItem: 'all',
 };
 
-const movies = (state = initialState, { type, payload }) => {
+export const movies = (state = initialState, { type, payload }) => {
   switch (type) {
     case FETCH_MOVIES:
       return {
         ...state,
-        items: [...state.items, ...payload.data],
+        items:
+          state.currentPage === 1
+            ? payload.data
+            : [...state.items, ...payload.data],
         currentPage: payload.offset + 1,
-        totalPages: Math.floor(
-          payload.totalAmount / payload.limit - payload.offset,
-        ),
+        totalPages: payload.totalAmount - state.currentPage,
         loading: false,
       };
 
@@ -46,11 +49,13 @@ const movies = (state = initialState, { type, payload }) => {
       };
 
     case EDIT_MOVIE:
-      let updatedMovie = state.items.find((movie) => {
+      const updatedMovie = state.items.find((movie) => {
         return movie.id === payload.id;
       });
 
-      Object.assign(updatedMovie, payload);
+      if (updatedMovie) {
+        Object.assign(updatedMovie, payload);
+      }
 
       return {
         items: [...state.items],
@@ -68,10 +73,7 @@ const movies = (state = initialState, { type, payload }) => {
         ...state,
         items: [...state.items, ...payload.data],
         currentPage: payload.offset + 1,
-        totalPages: Math.floor(
-          payload.totalAmount / payload.limit - payload.offset,
-        ),
-        error: null,
+        totalPages: payload.totalAmount - state.currentPage,
         loading: false,
       };
 
@@ -82,6 +84,24 @@ const movies = (state = initialState, { type, payload }) => {
         filterItem: payload,
         items: [],
         loading: true,
+      };
+
+    case SEARCH_MOVIES:
+      return {
+        ...state,
+        items: payload.data,
+        currentPage: 1,
+        totalPages: payload.totalAmount - state.currentPage,
+      };
+
+    case ERROR_MESSAGE:
+      return {
+        ...state,
+        items: [],
+        currentPage: 1,
+        totalPages: payload.totalAmount - state.currentPage,
+        error: payload,
+        loading: false,
       };
 
     default:

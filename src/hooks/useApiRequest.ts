@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import { getErrorMessage } from 'redux/actions';
 
 export const useApiRequest = (method, endpoint, action) => {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ export const useApiRequest = (method, endpoint, action) => {
           dispatch(action(data));
         })
         .catch((error) => {
-          alert(error.message);
+          dispatch(getErrorMessage(error.response.data));
         });
     },
     [method, endpoint, action],

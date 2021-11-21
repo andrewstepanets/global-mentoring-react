@@ -1,18 +1,27 @@
 import axios from 'axios';
-import { useCallback, useState } from 'react';
+import { ModalsContext } from 'modal-context';
+import { useCallback, useContext } from 'react';
 import { API_BASE } from '../@constants/index';
 
 const useMoreDetailsMovie = () => {
-  const [movieDetails, setMovieDetails] = useState(null);
-  const [loadingMovieDetails, setLoadingMovieDetails] = useState(true);
-  const [errorMovieDetails, setErrorMovieDetails] = useState(false);
+  const {
+    setErrorMovieDetails,
+    setLoadingMovieDetails,
+    setMovieDetails,
+    movieDetails,
+    loadingMovieDetails,
+    errorMovieDetails,
+  } = useContext(ModalsContext);
 
   const fetchMovieDetails = useCallback(
     async (id) => {
-      setErrorMovieDetails(false);
-      setLoadingMovieDetails(true);
+      if (!id) {
+        setErrorMovieDetails(true);
+        setLoadingMovieDetails(false);
+      }
 
       try {
+        setLoadingMovieDetails(true);
         const response = await axios.get(`${API_BASE}/${id}`);
         const responseMovieDetails = response.data;
 

@@ -2,7 +2,7 @@ import { API_DELETE } from '@constants';
 import { Button } from 'components/button';
 import { useApiRequest } from 'hooks/useApiRequest';
 import React, { FC, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import { deleteMovie } from 'redux/actions';
 import {
   ButtonContainer,
@@ -18,7 +18,9 @@ interface DeleteMovieFormProps {
 }
 
 export const DeleteMovieForm: FC<DeleteMovieFormProps> = ({ hideDelete }) => {
-  const posterId = useSelector(({ movies: { posterId } }) => posterId);
+  const posterId = useSelector(
+    ({ movies: { posterId } }: RootStateOrAny) => posterId,
+  );
   const { fetchData: deleteMovieFetch } = useApiRequest(
     'delete',
     API_DELETE,

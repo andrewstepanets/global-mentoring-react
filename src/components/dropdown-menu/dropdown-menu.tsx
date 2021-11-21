@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { useShowModal } from '../../hooks/useShowModal';
 import { putPosterId } from '../../redux/actions';
@@ -18,7 +18,7 @@ interface DropdownMenuProps {
   posterId: string | number;
 }
 
-export const DropdownMenu: FC<DropdownMenuProps> = ({
+export const DropdownMenu: React.FC<DropdownMenuProps> = ({
   hideEdit,
   hideDelete,
   posterId,
@@ -26,12 +26,12 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({
   const dispatch = useDispatch();
   const { isShowing, toggle } = useShowModal();
 
-  const handleOnDelete = useCallback(() => {
+  const handleOnDelete = React.useCallback(() => {
     hideDelete();
     dispatch(putPosterId(posterId));
   }, []);
 
-  const handleOnEdit = useCallback(() => {
+  const handleOnEdit = React.useCallback(() => {
     hideEdit();
     dispatch(putPosterId(posterId));
   }, []);

@@ -1,6 +1,7 @@
-import defaultImgMovie from '../assets/images/fallback_movie.png';
+export const encodeURL = (str: string) => {
+  return encodeURIComponent(str);
+};
 
-export function addDefaultSrc(event) {
-  event.target.src = defaultImgMovie;
-  event.target.alt = 'image not found';
-}
+export const decodeURL = (str: string) => {
+  return decodeURIComponent(str);
+};

@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import { colors, mediaQueries } from '../../../styles/constants';
 
+export interface FilterItemProp {
+  active: string;
+  item: string;
+}
+
 export const FilterList = styled.ul`
   display: flex;
   justify-content: space-between;
@@ -13,10 +18,12 @@ export const FilterList = styled.ul`
   `}
 `;
 
-export const FilterItem = styled.li`
+export const FilterItem = styled.li<FilterItemProp>`
   position: relative;
   display: inline-block;
   margin: 25px 15px;
+  color: ${({ item, active }) =>
+    active === item ? `${colors.coral}` : `${colors.white}`};
   text-decoration: none;
   cursor: pointer;
   ::after {

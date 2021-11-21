@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import { Filter } from './filter';
 import Posters from './posters/posters';
 import { PostersProps } from './posters/types';
@@ -12,7 +12,7 @@ export interface MoviesListProps extends PostersProps {
   hideDelete: () => void;
 }
 
-export const MoviesList: FC<MoviesListProps> = ({
+const MoviesList: FC<MoviesListProps> = ({
   setMovieDetails,
   setLoadingMovieDetails,
   setErrorMovieDetails,
@@ -33,3 +33,5 @@ export const MoviesList: FC<MoviesListProps> = ({
     />
   </MovieListWrapper>
 );
+
+export default memo(MoviesList);
