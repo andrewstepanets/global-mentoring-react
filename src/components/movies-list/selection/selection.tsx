@@ -1,7 +1,8 @@
 import { API_SORT_BY, SELECTION_DATA } from '@constants';
 import { useApiRequest } from 'hooks/useApiRequest';
 import React, { FC, useCallback } from 'react';
-import { filterMovies } from 'redux/actions';
+import { useDispatch } from 'react-redux';
+import { filterItem, filterMovies } from 'redux/actions';
 import {
   SelectionContainer,
   SelectionOption,
@@ -10,6 +11,7 @@ import {
 } from './styles';
 
 export const Selection: FC = () => {
+  const dispatch = useDispatch();
   const { fetchData: fetchSortByMovies } = useApiRequest(
     'get',
     API_SORT_BY,
@@ -18,6 +20,8 @@ export const Selection: FC = () => {
 
   const handleOnItem = useCallback(({ target }) => {
     const sortBy = target.value;
+    dispatch(filterItem(sortBy));
+
     fetchSortByMovies(sortBy);
   }, []);
 

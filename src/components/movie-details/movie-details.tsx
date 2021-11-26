@@ -1,7 +1,6 @@
 import { IMovieDetails } from 'components/movies-list/posters/types';
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import Loader from 'react-loader-spinner';
-import { addDefaultSrc } from 'utils/utils';
 import {
   MovieDetailsArticle,
   MovieDetailsAverage,
@@ -16,6 +15,7 @@ import {
   MovieDetailsWrapper,
   MovieDetailsYear,
 } from './styles';
+import defaultImgMovie from '../../assets/images/fallback_movie.png';
 
 interface MovieDetailsProps {
   loadingMovieDetails: boolean;
@@ -37,6 +37,11 @@ export const MovieDetails: FC<MovieDetailsProps> = ({
     runtime,
     overview,
   } = movieDetails;
+
+  const addDefaultSrc = useCallback(({ target }) => {
+    target.src = defaultImgMovie;
+    target.alt = 'Image not found';
+  }, []);
 
   return (
     <MovieDetailsWrapper>

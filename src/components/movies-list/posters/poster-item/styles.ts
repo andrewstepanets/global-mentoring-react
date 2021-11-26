@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { colors, colorsRgba, rgbaMap } from '../../../../styles/constants';
 
 export const PostersItem = styled.li`
@@ -12,7 +13,7 @@ export const PostersItem = styled.li`
   }
 `;
 
-export const PostersLink = styled.a`
+export const PostersLink = styled(Link)`
   cursor: pointer;
 `;
 

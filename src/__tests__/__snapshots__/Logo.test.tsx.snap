@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Logo /> matches with snapshot 1`] = `
+<body>
+  <div>
+    <a
+      class="sc-bdvvtL emFNGz"
+      href="/"
+    >
+      <h2>
+        netflix
+        <span>
+          roulette
+        </span>
+      </h2>
+    </a>
+  </div>
+</body>
+`;
