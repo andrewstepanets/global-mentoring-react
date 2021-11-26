@@ -7,7 +7,9 @@ import { useFormik } from 'formik';
 import { useApiRequest } from 'hooks/useApiRequest';
 import moment from 'moment';
 import * as React from 'react';
-import { addMovie } from 'redux/actions';
+import { useDispatch } from 'react-redux';
+import { HIDE_MODAL_ADD, SHOW_MODAL_ADD } from 'redux/modals/modals.types';
+import { addMovie } from 'redux/movies/movies.actions';
 import * as Yup from 'yup';
 import {
   AddMovieButtonContainer,
@@ -68,7 +70,7 @@ export const AddMovieForm: React.FC<AddMovieFormProps> = ({
   const onSubmit = (values) => {
     const body = { ...values, runtime: parseInt(values.runtime, 10) };
     fetchAddMovie(undefined, body);
-    hideAdd();
+    dispatch({ type: HIDE_MODAL_ADD });
     hideCongratulations();
   };
 
@@ -95,10 +97,12 @@ export const AddMovieForm: React.FC<AddMovieFormProps> = ({
     setFieldValue('release_date', formattedDate);
   };
 
+  const dispatch = useDispatch();
+
   return (
     <AddMovieFormWrapper>
       <AddMovieFormContainer>
-        <CloseButton onClick={() => hideAdd()} />
+        <CloseButton onClick={() => dispatch({ type: HIDE_MODAL_ADD })} />
         <AddMovieFormTitle>Add Movie</AddMovieFormTitle>
         <AddMovieFormInner onSubmit={handleSubmit}>
           <div>

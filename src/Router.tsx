@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
+import shortid from 'shortid';
 import Loader from 'react-loader-spinner';
 import { Home } from 'pages';
 
@@ -26,7 +27,6 @@ const routes = [
     component: SearchMovies,
   },
   {
-    path: '*',
     component: NoMatch,
   },
 ];
@@ -35,7 +35,7 @@ export const AppRouter = () => {
   return (
     <Switch>
       {routes.map((route) => (
-        <Route key={route.path} path={route.path} exact={route.exact}>
+        <Route key={shortid.generate()} path={route.path} exact={route.exact}>
           <Suspense
             fallback={
               <Loader type="Circles" color="#00BFFF" height={80} width={80} />

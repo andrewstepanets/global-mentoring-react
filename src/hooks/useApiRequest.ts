@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { getErrorMessage } from 'redux/actions';
+import { getErrorMessage } from 'redux/movies/movies.actions';
 
 export const useApiRequest = (method, endpoint, action) => {
   const dispatch = useDispatch();

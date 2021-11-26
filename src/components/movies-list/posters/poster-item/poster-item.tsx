@@ -13,12 +13,7 @@ import {
 
 import defaultImgMovie from '../../../../assets/images/fallback_movie.png';
 
-export const PosterItem: React.FC<PosterItemProps> = ({
-  genre,
-  poster,
-  hideEdit,
-  hideDelete,
-}: any) => {
+export const PosterItem: React.FC<PosterItemProps> = ({ genre, poster }) => {
   const addDefaultSrc = React.useCallback(({ target }) => {
     target.src = defaultImgMovie;
     target.alt = 'image not found';
@@ -26,11 +21,7 @@ export const PosterItem: React.FC<PosterItemProps> = ({
 
   return (
     <PostersItem key={poster.id}>
-      <DropdownMenu
-        hideEdit={hideEdit}
-        hideDelete={hideDelete}
-        posterId={poster.id}
-      />
+      <DropdownMenu posterId={poster.id} />
       <PostersLink id="poster-link" to={`/film/${poster.id}`}>
         <PostersImg
           src={poster.poster_path}

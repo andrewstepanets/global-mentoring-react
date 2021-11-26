@@ -1,6 +1,7 @@
 import { API_BASE } from '@constants';
 import { Button } from 'components/button';
 import { Input } from 'components/input';
+import { IMovieDetails } from 'components/movies-list/posters/types';
 import { ReleaseDatePicker } from 'components/release-date-picker';
 import { Select } from 'components/select';
 import { useFormik } from 'formik';
@@ -8,7 +9,9 @@ import { useApiRequest } from 'hooks/useApiRequest';
 import moment from 'moment';
 import React, { FC, useEffect } from 'react';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { editMovie } from 'redux/actions';
+import { editMovie } from 'redux/movies/movies.actions';
+import { MoviesState } from 'redux/movies/movies.reducer';
+import { AppState } from 'redux/root-reducer';
 import * as Yup from 'yup';
 import {
   CloseButton,
@@ -48,13 +51,13 @@ const validationSchema = Yup.object({
 });
 
 export const EditMovieForm: FC<EditMovieFormProps> = ({ hideEdit }) => {
-  const posterId = useSelector(
-    ({ movies: { posterId } }: RootStateOrAny) => posterId,
+  const posterId = useSelector<AppState>(
+    ({ movies: { posterId } }) => posterId,
   );
-  const movie = useSelector(({ movies: { items } }: RootStateOrAny) =>
+  const movie = useSelector<AppState>(({ movies: { items } }) =>
     items.find((movie) => movie.id === posterId),
   );
-  const initialValues = { ...initialValue, ...movie };
+  const initialValues = { ...initialValue, ...(movie as IMovieDetails) };
   const { fetchData: fetchEditMovie } = useApiRequest(
     'put',
     API_BASE,

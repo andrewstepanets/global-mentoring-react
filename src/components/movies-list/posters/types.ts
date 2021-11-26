@@ -14,16 +14,12 @@ export interface IMovieDetails {
 }
 
 export interface PostersProps {
-  setLoadingMovieDetails: boolean;
-  setErrorMovieDetails: boolean;
-  setMovieDetails: IMovieDetails;
-  hideEdit: () => void;
-  hideDelete: () => void;
+  setLoadingMovieDetails?: boolean;
+  setErrorMovieDetails?: boolean;
+  setMovieDetails?: IMovieDetails;
 }
 
 export interface PosterItemProps extends PostersProps {
   poster: IMovieDetails;
-  genre: string[];
-  hideEdit: () => void;
-  hideDelete: () => void;
+  genre: JSX.Element[] | string[];
 }

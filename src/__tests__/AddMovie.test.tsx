@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { movies } from '../redux/reducers';
+import movies from '../redux/movies/movies.reducer';
 import { AddMovieForm } from '../components/add-movie-form';
 import { Router } from 'react-router-dom';
 

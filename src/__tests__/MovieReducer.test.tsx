@@ -1,4 +1,4 @@
-import { initialState, movies } from '../redux/reducers';
+import movies, { initialState } from '../redux/movies/movies.reducer';
 
 import {
   FETCH_MOVIES,
@@ -9,7 +9,7 @@ import {
   FILTER_ITEM,
   SEARCH_MOVIES,
   ERROR_MESSAGE,
-} from '../redux/types';
+} from '../redux/movies/movies.types';
 
 const poster = {
   title: 'Fifty Shades Freed',

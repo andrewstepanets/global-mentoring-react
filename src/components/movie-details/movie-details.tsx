@@ -54,7 +54,7 @@ export const MovieDetails: FC<MovieDetailsProps> = ({
       {!errorMovieDetails && !loadingMovieDetails && (
         <>
           <MovieDetailsImage
-            src={poster_path}
+            src={poster_path ?? ''}
             alt={title}
             onError={addDefaultSrc}
           />

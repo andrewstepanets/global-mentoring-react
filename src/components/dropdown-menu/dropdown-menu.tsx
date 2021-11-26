@@ -1,7 +1,9 @@
+import { ModalsContext } from 'modal-context';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
+import { SHOW_MODAL_DELETE, SHOW_MODAL_EDIT } from 'redux/modals/modals.types';
 import { useShowModal } from '../../hooks/useShowModal';
-import { putPosterId } from '../../redux/actions';
+import { putPosterId } from '../../redux/movies/movies.actions';
 import {
   DropdownMenuButton,
   DropdownMenuContainer,
@@ -13,28 +15,24 @@ import {
 } from './styles';
 
 interface DropdownMenuProps {
-  hideEdit: () => void;
-  hideDelete: () => void;
   posterId: string | number;
 }
 
-export const DropdownMenu: React.FC<DropdownMenuProps> = ({
-  hideEdit,
-  hideDelete,
-  posterId,
-}) => {
+export const DropdownMenu: React.FC<DropdownMenuProps> = ({ posterId }) => {
   const dispatch = useDispatch();
   const { isShowing, toggle } = useShowModal();
 
-  const handleOnDelete = React.useCallback(() => {
-    hideDelete();
+  const handleOnDelete = () => {
+    dispatch({ type: SHOW_MODAL_DELETE });
     dispatch(putPosterId(posterId));
-  }, []);
+    toggle();
+  };
 
-  const handleOnEdit = React.useCallback(() => {
-    hideEdit();
+  const handleOnEdit = () => {
+    dispatch({ type: SHOW_MODAL_EDIT });
     dispatch(putPosterId(posterId));
-  }, []);
+    toggle();
+  };
 
   return (
     <DropdownMenuContainer>

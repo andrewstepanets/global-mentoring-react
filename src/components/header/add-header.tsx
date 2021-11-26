@@ -1,15 +1,15 @@
-import React, { FC, SyntheticEvent, useCallback } from 'react';
+import React, { FC, SyntheticEvent, useCallback, useContext } from 'react';
 
 import { Button } from 'components/button';
 import { Logo } from 'components/logo';
 import { HeaderWrapper } from './styles';
 import { SearchBlock } from 'components/search-block';
-import { AddHeaderProps } from './types';
+import { ModalsContext } from 'modal-context';
+import { useDispatch } from 'react-redux';
+import { SHOW_MODAL_ADD } from 'redux/modals/modals.types';
 
-export const AddHeader: FC<AddHeaderProps> = ({ hideAdd }) => {
-  const handleOnClick = useCallback((event: SyntheticEvent): void => {
-    hideAdd();
-  }, []);
+export const AddHeader: FC = () => {
+  const dispatch = useDispatch();
 
   return (
     <HeaderWrapper>
@@ -19,7 +19,7 @@ export const AddHeader: FC<AddHeaderProps> = ({ hideAdd }) => {
         <Button
           button
           type="button"
-          onClick={handleOnClick}
+          onClick={() => dispatch({ type: SHOW_MODAL_ADD })}
           text="+ Add Movie"
         />
       </div>

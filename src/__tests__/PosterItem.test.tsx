@@ -7,7 +7,7 @@ import ModalsContextProvider from '../modal-context/modal-context';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { movies } from '../redux/reducers';
+import movies from '../redux/movies/movies.reducer';
 
 const poster = {
   title: 'Fifty Shades Freed',
@@ -43,8 +43,6 @@ describe('<PosterItem />', () => {
           <PosterItem
             genre={poster.genres}
             poster={poster}
-            hideEdit={() => {}}
-            hideDelete={() => {}}
             setLoadingMovieDetails={false}
             setErrorMovieDetails={false}
             setMovieDetails={poster}
@@ -63,8 +61,6 @@ describe('<PosterItem />', () => {
           <PosterItem
             genre={poster.genres}
             poster={poster}
-            hideEdit={() => {}}
-            hideDelete={() => {}}
             setLoadingMovieDetails={false}
             setErrorMovieDetails={false}
             setMovieDetails={poster}

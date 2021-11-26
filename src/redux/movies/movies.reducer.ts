@@ -1,4 +1,5 @@
-import { combineReducers } from 'redux';
+import { IMovieDetails } from 'components/movies-list/posters/types';
+import { number } from 'yup/lib/locale';
 import {
   FETCH_MOVIES,
   POSTER_ID,
@@ -9,9 +10,19 @@ import {
   FILTER_ITEM,
   SEARCH_MOVIES,
   ERROR_MESSAGE,
-} from './types';
+} from './movies.types';
 
-export const initialState = {
+export interface MoviesState {
+  items: IMovieDetails[];
+  currentPage: number;
+  totalPages: number;
+  error: string | null;
+  loading: boolean;
+  posterId: number | null;
+  filterItem: string;
+}
+
+export const initialState: MoviesState = {
   items: [],
   currentPage: 1,
   totalPages: 0,
@@ -21,7 +32,7 @@ export const initialState = {
   filterItem: 'all',
 };
 
-export const movies = (state = initialState, { type, payload }) => {
+const movies = (state = initialState, { type, payload }) => {
   switch (type) {
     case FETCH_MOVIES:
       return {
@@ -109,6 +120,4 @@ export const movies = (state = initialState, { type, payload }) => {
   }
 };
 
-export default combineReducers({
-  movies,
-});
+export default movies;

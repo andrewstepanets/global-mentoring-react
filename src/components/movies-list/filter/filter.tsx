@@ -3,7 +3,11 @@ import { useApiRequest } from 'hooks/useApiRequest';
 import React, { FC, useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { fetchMovies, filterItem, filterMovies } from 'redux/actions';
+import {
+  fetchMovies,
+  filterItem,
+  filterMovies,
+} from 'redux/movies/movies.actions';
 import { FilterItem, FilterList } from './styles';
 
 export const Filter: FC = () => {

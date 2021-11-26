@@ -4,9 +4,10 @@ import { useApiRequest } from 'hooks/useApiRequest';
 import { ParamTypes } from 'pages/types';
 import React, { FC, memo, useCallback, useEffect } from 'react';
 import Loader from 'react-loader-spinner';
-import { useSelector, RootStateOrAny } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchMovies, filterMovies } from 'redux/actions';
+import { fetchMovies, filterMovies } from 'redux/movies/movies.actions';
+import { AppState } from 'redux/root-reducer';
 import shortid from 'shortid';
 import { encodeURL } from 'utils/utils';
 import { PosterItem } from './poster-item';
@@ -16,28 +17,22 @@ import {
   PostersList,
   PostersWrapper,
 } from './styles';
-import { PostersProps } from './types';
+import { IMovieDetails, PostersProps } from './types';
 
-const Posters: FC<PostersProps> = ({
-  setMovieDetails,
-  setLoadingMovieDetails,
-  setErrorMovieDetails,
-  hideEdit,
-  hideDelete,
-}) => {
-  const filterItem = useSelector(
-    ({ movies: { filterItem } }: RootStateOrAny) => filterItem,
+const Posters: FC<PostersProps> = () => {
+  const filterItem = useSelector<AppState>(
+    ({ movies: { filterItem } }) => filterItem,
   );
-  const movies = useSelector(({ movies: { items } }: RootStateOrAny) => items);
-  const currentPage = useSelector(
-    ({ movies: { currentPage } }: RootStateOrAny) => currentPage,
+  const movies = useSelector<AppState, IMovieDetails[]>(
+    ({ movies: { items } }) => items,
   );
-  const error = useSelector(({ movies: { error } }: RootStateOrAny) => error);
-  const loading = useSelector(
-    ({ movies: { loading } }: RootStateOrAny) => loading,
+  const currentPage = useSelector<AppState>(
+    ({ movies: { currentPage } }) => currentPage,
   );
-  const totalPages = useSelector(
-    ({ movies: { totalPages } }: RootStateOrAny) => totalPages,
+  const error = useSelector<AppState>(({ movies: { error } }) => error);
+  const loading = useSelector<AppState>(({ movies: { loading } }) => loading);
+  const totalPages = useSelector<AppState>(
+    ({ movies: { totalPages } }) => totalPages,
   );
   const { fetchData: getMovies } = useApiRequest('get', API_BASE, fetchMovies);
   const { fetchData: getMoreMovies } = useApiRequest(
@@ -75,16 +70,7 @@ const Posters: FC<PostersProps> = ({
     ));
 
     return (
-      <PosterItem
-        key={shortid.generate()}
-        setMovieDetails={setMovieDetails}
-        setLoadingMovieDetails={setLoadingMovieDetails}
-        setErrorMovieDetails={setErrorMovieDetails}
-        poster={poster}
-        genre={genre}
-        hideEdit={hideEdit}
-        hideDelete={hideDelete}
-      />
+      <PosterItem key={shortid.generate()} poster={poster} genre={genre} />
     );
   });
 

@@ -7,7 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
 import store from './redux/store';
 
-const renderMethod = module.hot ? ReactDOM.render : ReactDOM.hydrate;
+const renderMethod = !!module.hot ? ReactDOM.render : ReactDOM.hydrate;
 
 renderMethod(
   <Provider store={store}>

@@ -8,7 +8,7 @@ import {
   FILTER_ITEM,
   SEARCH_MOVIES,
   ERROR_MESSAGE,
-} from './types';
+} from './movies.types';
 
 export const fetchMovies = (payload) => {
   return { type: FETCH_MOVIES, payload };

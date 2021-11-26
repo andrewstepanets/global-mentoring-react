@@ -2,7 +2,7 @@ import { API_SORT_BY, SELECTION_DATA } from '@constants';
 import { useApiRequest } from 'hooks/useApiRequest';
 import React, { FC, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { filterItem, filterMovies } from 'redux/actions';
+import { filterItem, filterMovies } from 'redux/movies/movies.actions';
 import {
   SelectionContainer,
   SelectionOption,
