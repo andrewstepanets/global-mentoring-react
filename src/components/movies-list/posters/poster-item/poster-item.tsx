@@ -1,8 +1,5 @@
 import { DropdownMenu } from 'components/dropdown-menu';
-import useMoreDetailsMovie from 'hooks/useMoreDetailsMovie';
-import React, { FC, useCallback, useEffect } from 'react';
-import shortid from 'shortid';
-import { addDefaultSrc } from 'utils/utils';
+import * as React from 'react';
 import { PosterItemProps } from '../types';
 import {
   PostersGenre,
@@ -14,51 +11,24 @@ import {
   PostersWrapTitle,
 } from './styles';
 
-export const PosterItem: FC<PosterItemProps> = ({
-  setMovieDetails,
-  setLoadingMovieDetails,
-  setErrorMovieDetails,
-  genre,
-  poster,
-  hideEdit,
-  hideDelete,
-}: any) => {
-  const {
-    movieDetails,
-    loadingMovieDetails,
-    errorMovieDetails,
-    fetchMovieDetails,
-  } = useMoreDetailsMovie();
+import defaultImgMovie from '../../../../assets/images/fallback_movie.png';
 
-  const handleMoreDetails = useCallback((id) => {
-    fetchMovieDetails(id);
-
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+export const PosterItem: React.FC<PosterItemProps> = ({ genre, poster }) => {
+  const addDefaultSrc = React.useCallback(({ target }) => {
+    target.src = defaultImgMovie;
+    target.alt = 'image not found';
   }, []);
 
-  useEffect(() => {
-    setLoadingMovieDetails(loadingMovieDetails);
-    setErrorMovieDetails(errorMovieDetails);
-    setMovieDetails(movieDetails);
-  }, [movieDetails, loadingMovieDetails, errorMovieDetails]);
-
   return (
-    <PostersItem key={shortid.generate()}>
-      <DropdownMenu
-        hideEdit={hideEdit}
-        hideDelete={hideDelete}
-        posterId={poster.id}
-      />
-      <PostersLink onClick={() => handleMoreDetails(poster.id)}>
+    <PostersItem key={poster.id}>
+      <DropdownMenu posterId={poster.id} />
+      <PostersLink id="poster-link" to={`/film/${poster.id}`}>
         <PostersImg
           src={poster.poster_path}
           alt={poster.title}
           onError={addDefaultSrc}
         />
-        <PostersWrapTitle>
+        <PostersWrapTitle id="poster-title">
           <PostersTitle>{poster.title}</PostersTitle>
           <PostersTitleYear>{poster.release_date}</PostersTitleYear>
         </PostersWrapTitle>

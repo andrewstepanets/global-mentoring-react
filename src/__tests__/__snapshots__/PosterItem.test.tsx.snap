@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PosterItem /> matches with snapshot 1`] = `
+<body>
+  <div>
+    <li
+      class="sc-iCfMLu bNnaVt"
+    >
+      <div
+        class="sc-bdvvtL hfOjlw"
+      >
+        <button
+          class="sc-gKclnd haiMtS"
+        >
+          <span
+            class="sc-hKwDye eJmhdO"
+          />
+          <span
+            class="sc-hKwDye eJmhdO"
+          />
+          <span
+            class="sc-hKwDye eJmhdO"
+          />
+        </button>
+      </div>
+      <a
+        class="sc-furwcr enHelU"
+        href="/film/337167"
+      >
+        <img
+          alt="Fifty Shades Freed"
+          class="sc-iqseJM fXdUqG"
+          src="https://image.tmdb.org/t/p/w500/sM33SANp9z6rXW8Itn7NnG1GOEs.jpg"
+        />
+        <div
+          class="sc-pVTFL cGrwuW"
+        >
+          <h2
+            class="sc-jrQzAO jtEcVe"
+          >
+            Fifty Shades Freed
+          </h2>
+          <span
+            class="sc-kDTinF cDxvgr"
+          >
+            2016-02-11
+          </span>
+        </div>
+        <p
+          class="sc-crHmcD foEfLe"
+        >
+          Animation
+          Adventure
+          Family
+          Comedy
+        </p>
+      </a>
+    </li>
+  </div>
+</body>
+`;

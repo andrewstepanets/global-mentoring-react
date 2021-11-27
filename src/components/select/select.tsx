@@ -1,5 +1,5 @@
 import { SELECT_OPTIONS } from '@constants';
-import React, { FC, useState } from 'react';
+import * as React from 'react';
 import {
   SelectInput,
   SelectLabel,
@@ -10,20 +10,23 @@ import {
 } from './styles';
 import { SelectProps } from './types';
 
-export const Select: FC<SelectProps> = ({ selected, onChange }) => {
-  const [isOpen, setOpen] = useState(false);
+export const Select: React.FC<SelectProps> = ({ selected, onChange }) => {
+  const [isOpen, setOpen] = React.useState(false);
 
-  const handleOnSelected = (selectedOption) => {
-    if (selected.includes(selectedOption)) {
-      const newSelected = selected.filter(
-        (option) => option !== selectedOption,
-      );
-      onChange(newSelected);
-    } else {
-      const newSelected = [...selected, selectedOption];
-      onChange(newSelected);
-    }
-  };
+  const handleOnSelected = React.useCallback(
+    (selectedOption) => {
+      if (selected.includes(selectedOption)) {
+        const newSelected = selected.filter(
+          (option) => option !== selectedOption,
+        );
+        onChange(newSelected);
+      } else {
+        const newSelected = [...selected, selectedOption];
+        onChange(newSelected);
+      }
+    },
+    [selected],
+  );
 
   const options = SELECT_OPTIONS.map((option) => {
     return (
@@ -50,7 +53,7 @@ export const Select: FC<SelectProps> = ({ selected, onChange }) => {
         type="text"
         onClick={() => setOpen((isOpen) => !isOpen)}
         placeholder="Select Genre"
-      />
+      ></SelectMain>
       {isOpen && <SelectOver>{options}</SelectOver>}
     </SelectWrapper>
   );

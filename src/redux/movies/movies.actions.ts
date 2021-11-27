@@ -1,12 +1,14 @@
 import {
-  ADD_MOVIE,
-  DELETE_MOVIE,
-  EDIT_MOVIE,
   FETCH_MOVIES,
-  FILTER_ITEM,
-  FILTER_MOVIES,
+  DELETE_MOVIE,
   POSTER_ID,
-} from './types';
+  ADD_MOVIE,
+  EDIT_MOVIE,
+  FILTER_MOVIES,
+  FILTER_ITEM,
+  SEARCH_MOVIES,
+  ERROR_MESSAGE,
+} from './movies.types';
 
 export const fetchMovies = (payload) => {
   return { type: FETCH_MOVIES, payload };
@@ -34,4 +36,12 @@ export const filterMovies = (payload) => {
 
 export const filterItem = (payload) => {
   return { type: FILTER_ITEM, payload };
+};
+
+export const searchMovies = (payload) => {
+  return { type: SEARCH_MOVIES, payload };
+};
+
+export const getErrorMessage = (payload) => {
+  return { type: ERROR_MESSAGE, payload };
 };
