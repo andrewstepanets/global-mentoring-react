@@ -23,9 +23,7 @@ const Posters: FC<PostersProps> = () => {
   const filterItem = useSelector<AppState>(
     ({ movies: { filterItem } }) => filterItem,
   );
-  const movies = useSelector<AppState, IMovieDetails[]>(
-    ({ movies: { items } }) => items,
-  );
+  const movies: any = useSelector<AppState>(({ movies: { items } }) => items);
   const currentPage = useSelector<AppState>(
     ({ movies: { currentPage } }) => currentPage,
   );
@@ -84,7 +82,7 @@ const Posters: FC<PostersProps> = () => {
         <>
           {' '}
           <NumberMovies id="number-of-movies">
-            <span>{movies.length}</span> movie found
+            <span>{movies.size}</span> movie found
           </NumberMovies>
           <PostersList>{posters}</PostersList>
           {totalPages > 1 && (

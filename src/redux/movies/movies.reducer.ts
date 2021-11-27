@@ -1,5 +1,5 @@
 import { IMovieDetails } from 'components/movies-list/posters/types';
-import { number } from 'yup/lib/locale';
+import { List } from 'immutable';
 import {
   FETCH_MOVIES,
   POSTER_ID,
@@ -13,7 +13,7 @@ import {
 } from './movies.types';
 
 export interface MoviesState {
-  items: IMovieDetails[];
+  items: Immutable.List<IMovieDetails>;
   currentPage: number;
   totalPages: number;
   error: string | null;
@@ -23,7 +23,7 @@ export interface MoviesState {
 }
 
 export const initialState: MoviesState = {
-  items: [],
+  items: List(),
   currentPage: 1,
   totalPages: 0,
   error: null,
@@ -39,9 +39,9 @@ const movies = (state = initialState, { type, payload }) => {
         ...state,
         items:
           state.currentPage === 1
-            ? payload.data
-            : [...state.items, ...payload.data],
-        currentPage: payload.offset + 1,
+            ? List(payload.data)
+            : List(state.items).concat(List(payload.data)),
+        currentPage: state.currentPage + 1,
         totalPages: payload.totalAmount - state.currentPage,
         loading: false,
       };
@@ -55,7 +55,7 @@ const movies = (state = initialState, { type, payload }) => {
     case ADD_MOVIE:
       return {
         ...state,
-        items: [{ id: state.posterId, ...payload }, ...state.items],
+        items: List(state.items).unshift({ id: state.posterId, ...payload }),
         loading: false,
       };
 
@@ -69,20 +69,20 @@ const movies = (state = initialState, { type, payload }) => {
       }
 
       return {
-        items: [...state.items],
+        items: List(state.items),
       };
 
     case DELETE_MOVIE:
       return {
         ...state,
-        items: [...state.items.filter((item) => item.id !== state.posterId)],
+        items: List(state.items).filter((item) => item.id !== state.posterId),
         loading: false,
       };
 
     case FILTER_MOVIES:
       return {
         ...state,
-        items: [...state.items, ...payload.data],
+        items: List(state.items).concat(List(payload.data)),
         currentPage: payload.offset + 1,
         totalPages: payload.totalAmount - state.currentPage,
         loading: false,
@@ -93,14 +93,14 @@ const movies = (state = initialState, { type, payload }) => {
         ...state,
         currentPage: 0,
         filterItem: payload,
-        items: [],
+        items: List(),
         loading: true,
       };
 
     case SEARCH_MOVIES:
       return {
         ...state,
-        items: payload.data,
+        items: List(payload.data),
         currentPage: 1,
         totalPages: payload.totalAmount - state.currentPage,
       };
@@ -108,7 +108,7 @@ const movies = (state = initialState, { type, payload }) => {
     case ERROR_MESSAGE:
       return {
         ...state,
-        items: [],
+        items: List(),
         currentPage: 1,
         totalPages: payload.totalAmount - state.currentPage,
         error: payload,
