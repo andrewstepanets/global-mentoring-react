@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ModalsContext } from 'modal-context';
+import { ModalsContext } from 'modal-context/modal-context';
 import { useCallback, useContext } from 'react';
 import { API_BASE } from '../@constants/index';
 
@@ -24,10 +24,12 @@ const useMoreDetailsMovie = () => {
         setLoadingMovieDetails(true);
         const response = await axios.get(`${API_BASE}/${id}`);
         const responseMovieDetails = response.data;
+        console.log(responseMovieDetails);
 
         setMovieDetails(responseMovieDetails);
       } catch (error) {
         setErrorMovieDetails(true);
+        console.log(error);
       } finally {
         setLoadingMovieDetails(false);
       }

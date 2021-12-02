@@ -12,8 +12,9 @@ import {
 } from './styles';
 
 import defaultImgMovie from '../../../../assets/images/fallback_movie.png';
+import useMoreDetailsMovie from 'hooks/useMoreDetailsMovie';
 
-export const PosterItem: React.FC<PosterItemProps> = ({ genre, poster }) => {
+const PosterItem: React.FC<PosterItemProps> = ({ genre, poster }) => {
   const addDefaultSrc = React.useCallback(({ target }) => {
     target.src = defaultImgMovie;
     target.alt = 'image not found';
@@ -37,3 +38,5 @@ export const PosterItem: React.FC<PosterItemProps> = ({ genre, poster }) => {
     </PostersItem>
   );
 };
+
+export default React.memo(PosterItem);

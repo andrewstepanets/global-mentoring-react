@@ -7,6 +7,8 @@ import { useParams } from 'react-router-dom';
 import { ParamTypes } from './types';
 
 const MovieDetails = () => {
+  const { setMovieDetails, setLoadingMovieDetails, setErrorMovieDetails } =
+    useContext(ModalsContext);
   const { id } = useParams<ParamTypes>();
   const {
     movieDetails,
@@ -31,7 +33,11 @@ const MovieDetails = () => {
         loadingMovieDetails={loadingMovieDetails}
         errorMovieDetails={errorMovieDetails}
       />
-      <MoviesList />
+      <MoviesList
+        setMovieDetails={setMovieDetails}
+        setLoadingMovieDetails={setLoadingMovieDetails}
+        setErrorMovieDetails={setErrorMovieDetails}
+      />
     </>
   );
 };

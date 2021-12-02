@@ -4,32 +4,37 @@ import { useApiRequest } from 'hooks/useApiRequest';
 import { ParamTypes } from 'pages/types';
 import React, { FC, memo, useCallback, useEffect } from 'react';
 import Loader from 'react-loader-spinner';
-import { useSelector } from 'react-redux';
+import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchMovies, filterMovies } from 'redux/movies/movies.actions';
 import { AppState } from 'redux/root-reducer';
 import shortid from 'shortid';
 import { encodeURL } from 'utils/utils';
-import { PosterItem } from './poster-item';
+import PosterItem from './poster-item/poster-item';
 import {
   NumberMovies,
   PostersError,
   PostersList,
   PostersWrapper,
 } from './styles';
-import { IMovieDetails, PostersProps } from './types';
+import { PostersProps } from './types';
 
-const Posters: FC<PostersProps> = () => {
-  const filterItem = useSelector<AppState>(
+const Posters: FC<PostersProps> = ({
+  setMovieDetails,
+  setLoadingMovieDetails,
+  setErrorMovieDetails,
+}) => {
+  const typedUseSelector: TypedUseSelectorHook<AppState> = useSelector;
+  const filterItem = typedUseSelector(
     ({ movies: { filterItem } }) => filterItem,
   );
-  const movies: any = useSelector<AppState>(({ movies: { items } }) => items);
-  const currentPage = useSelector<AppState>(
+  const movies = typedUseSelector(({ movies: { items } }) => items);
+  const currentPage = typedUseSelector(
     ({ movies: { currentPage } }) => currentPage,
   );
-  const error = useSelector<AppState>(({ movies: { error } }) => error);
-  const loading = useSelector<AppState>(({ movies: { loading } }) => loading);
-  const totalPages = useSelector<AppState>(
+  const error = typedUseSelector(({ movies: { error } }) => error);
+  const loading = typedUseSelector(({ movies: { loading } }) => loading);
+  const totalPages = typedUseSelector(
     ({ movies: { totalPages } }) => totalPages,
   );
   const { fetchData: getMovies } = useApiRequest('get', API_BASE, fetchMovies);
@@ -68,7 +73,14 @@ const Posters: FC<PostersProps> = () => {
     ));
 
     return (
-      <PosterItem key={shortid.generate()} poster={poster} genre={genre} />
+      <PosterItem
+        key={shortid.generate()}
+        setMovieDetails={setMovieDetails}
+        setLoadingMovieDetails={setLoadingMovieDetails}
+        setErrorMovieDetails={setErrorMovieDetails}
+        poster={poster}
+        genre={genre}
+      />
     );
   });
 

@@ -14,9 +14,9 @@ export interface IMovieDetails {
 }
 
 export interface PostersProps {
-  setLoadingMovieDetails?: boolean;
-  setErrorMovieDetails?: boolean;
-  setMovieDetails?: IMovieDetails;
+  setLoadingMovieDetails: boolean;
+  setErrorMovieDetails: boolean;
+  setMovieDetails: IMovieDetails;
 }
 
 export interface PosterItemProps extends PostersProps {

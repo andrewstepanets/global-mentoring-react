@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { getByText, render } from '@testing-library/react';
 
-import { PosterItem } from '../components/movies-list/posters/poster-item';
+import PosterItem from '../components/movies-list/posters/poster-item/poster-item';
 import ModalsContextProvider from '../modal-context/modal-context';
 
 import { createStore } from 'redux';

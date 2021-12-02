@@ -6,14 +6,19 @@ import { Selection } from './selection';
 import { ModalsContext } from 'modal-context';
 import { FilterSelectionWrapper, MovieListWrapper } from './styles';
 
-const MoviesList: FC = () => {
+export interface MovieListProps extends PostersProps {
+  setLoadingMovieDetails: boolean;
+  setErrorMovieDetails: boolean;
+}
+
+const MoviesList: FC<MovieListProps> = (props) => {
   return (
     <MovieListWrapper>
       <FilterSelectionWrapper>
         <Filter />
         <Selection />
       </FilterSelectionWrapper>
-      <Posters />
+      <Posters {...props} />
     </MovieListWrapper>
   );
 };

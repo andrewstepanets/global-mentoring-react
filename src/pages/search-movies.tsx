@@ -2,13 +2,16 @@ import { API_SEARCH } from '@constants';
 import { AddHeader } from 'components/header';
 import MoviesList from 'components/movies-list/movies-list';
 import { useApiRequest } from 'hooks/useApiRequest';
-import React, { useEffect } from 'react';
+import { ModalsContext } from 'modal-context/modal-context';
+import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { searchMovies } from 'redux/movies/movies.actions';
 import { encodeURL } from 'utils/utils';
 import { ParamTypes } from './types';
 
 export const SearchMovies = () => {
+  const { setMovieDetails, setLoadingMovieDetails, setErrorMovieDetails } =
+    useContext(ModalsContext);
   const { fetchData: getSearchMovies } = useApiRequest(
     'get',
     API_SEARCH,
@@ -25,7 +28,11 @@ export const SearchMovies = () => {
   return (
     <>
       <AddHeader />
-      <MoviesList />
+      <MoviesList
+        setMovieDetails={setMovieDetails}
+        setLoadingMovieDetails={setLoadingMovieDetails}
+        setErrorMovieDetails={setErrorMovieDetails}
+      />
     </>
   );
 };
